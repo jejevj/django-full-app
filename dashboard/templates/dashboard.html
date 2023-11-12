@@ -1,27 +1,140 @@
+{% extends "layouts.html" %} {% load static %} {% block pagecontent %}
+<!-- djangotemplates/example/templates/base.html -->
 
-
-{% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>
-      Django Sample Site - {% block title %}{% endblock %}
-    </title>
-
-    <link rel="stylesheet" href="{% static 'css/demo.css' %}" type="text/css" />
-    <script src="{% static 'js/main.js' %}"></script> <!-- This is how to include a static file -->
-  </head>
-  <body>Berhasil Login Donk!
-
-    <!-- di dalam file yang membutuhkan logout, misalnya header.html -->
-    {% if user.is_authenticated %}
-        <p>Hello, {{ user.username }}! <a href="{% url 'custom_logout' %}">Logout</a></p>
-    {% endif %}
-    <!-- djangotemplates/example/templates/base.html -->
-    <div class="container">
-      {% block pagecontent %}
-      {% endblock %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="row">
+    <!-- View Monitoring -->
+    <div class="col-lg-6 order-3 order-xl-0">
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-7">
+            <div class="card-body text-nowrap">
+              <h5 class="card-title mb-0">Monitoring Driver 🎉</h5>
+              <p class="mb-2">Cek Pengiriman Disini</p>
+              <a href="javascript:;" class="btn btn-primary">Cek Pengiriman</a>
+            </div>
+          </div>
+          <div class="col-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/10740/10740609.png"
+                height="140"
+                alt="view sales"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </body>
-</html>
+    <!-- View Monitoring -->
+    <!-- View Delivery -->
+    <div class="col-lg-6 order-3 order-xl-0">
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-7">
+            <div class="card-body text-nowrap">
+              <h5 class="card-title mb-0">Delivery</h5>
+              <p class="mb-2">Daftar Pengiriman Ada Disini</p>
+              <a href="javascript:;" class="btn btn-primary"
+                >Kelola Pengiriman</a
+              >
+            </div>
+          </div>
+          <div class="col-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/10740/10740605.png"
+                height="140"
+                alt="view sales"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View Delivery -->
+
+    <!-- View Customer -->
+    <div class="col-lg-4 order-3 order-xl-0 mt-5">
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-7">
+            <div class="card-body text-nowrap">
+              <h5 class="card-title mb-0">Customer</h5>
+              <p class="mb-2">Daftar Customer Ada Disini</p>
+              <a href="javascript:;" class="btn btn-primary"
+                >Kelola Customer</a
+              >
+            </div>
+          </div>
+          <div class="col-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5264/5264845.png"
+                height="100"
+                alt="view sales"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View Customer-->
+
+    <!-- View Driver -->
+    <div class="col-lg-4 order-3 order-xl-0 mt-5">
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-7">
+            <div class="card-body text-nowrap">
+              <h5 class="card-title mb-0">Driver</h5>
+              <p class="mb-2">Daftar Driver Ada Disini</p>
+              <a href="javascript:;" class="btn btn-primary"
+                >Kelola Driver</a
+              >
+            </div>
+          </div>
+          <div class="col-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3295/3295204.png"
+                height="100"
+                alt="view sales"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View Driver-->
+
+    <!-- View History Driver -->
+    <div class="col-lg-4 order-3 order-xl-0 mt-5">
+      <div class="card">
+        <div class="d-flex align-items-end row">
+          <div class="col-7">
+            <div class="card-body text-nowrap">
+              <h5 class="card-title mb-0">History Driver</h5>
+              <p class="mb-2">Cek Riwayat Pengiriman</p>
+              <a href="javascript:;" class="btn btn-primary"
+                >Cek Riwayat</a
+              >
+            </div>
+          </div>
+          <div class="col-5 text-center text-sm-left">
+            <div class="card-body pb-0 px-0 px-md-4">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/8607/8607768.png"
+                height="100"
+                alt="view sales"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- View History Driver-->
+  </div>
+</div>
+
+{% endblock %}
