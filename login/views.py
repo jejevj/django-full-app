@@ -1,13 +1,14 @@
 # di dalam file views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import CustomLoginForm
+
 def custom_login(request):
     if request.method == 'POST':
-        form = CustomLoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Validasi username dan password
+        if username and password:
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -15,11 +16,15 @@ def custom_login(request):
                 return redirect('dashboard')
             else:
                 # Return an 'invalid login' error message.
-                form.add_error(None, 'Invalid login credentials')
+                error_message = 'Invalid login credentials'
+        else:
+            # Return an 'invalid form submission' error message.
+            error_message = 'Invalid form submission. Please provide both username and password.'
     else:
-        form = CustomLoginForm()
+        # Form pertama kali diakses (GET request)
+        error_message = None
 
-    return render(request, 'masuk.html', {'form': form})
+    return render(request, 'masuk.html', {'error_message': error_message})
 
 
 def custom_logout(request):

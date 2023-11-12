@@ -1,6 +1,27 @@
-Berhasil Login Donk!
 
-<!-- di dalam file yang membutuhkan logout, misalnya header.html -->
-{% if user.is_authenticated %}
-    <p>Hello, {{ user.username }}! <a href="{% url 'custom_logout' %}">Logout</a></p>
-{% endif %}
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Django Sample Site - {% block title %}{% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}" type="text/css" />
+    <script src="{% static 'js/main.js' %}"></script> <!-- This is how to include a static file -->
+  </head>
+  <body>Berhasil Login Donk!
+
+    <!-- di dalam file yang membutuhkan logout, misalnya header.html -->
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}! <a href="{% url 'custom_logout' %}">Logout</a></p>
+    {% endif %}
+    <!-- djangotemplates/example/templates/base.html -->
+    <div class="container">
+      {% block pagecontent %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
