@@ -9,7 +9,5 @@ urlpatterns = [
     
     
     # Test Web
-    path('login/', views.user_login, name='login'),
-    path('register/', views.user_register, name='user_register'),
-    path('home/',views.home,name='home')
+    path('home/',views.home,name='home'),
 ]

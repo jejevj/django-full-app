@@ -6,7 +6,12 @@ class UserCustom(models.Model):
     username = models.TextField()
     email = models.TextField()
     password = models.TextField()
-    level = models.TextField(default="user")
+    hp = models.TextField(max_length=12)
+    photo = models.TextField()
+    lat = models.TextField(default="-6.1661686")
+    lon = models.TextField(default="106.8717686")
+    level = models.TextField(default="driver")
+    created_at = models.DateTimeField(auto_now=True)
     
     def save(self, *args, **kwargs):
         # Hash password sebelum menyimpan

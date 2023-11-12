@@ -1,0 +1,6 @@
+Berhasil Login Donk!
+
+<!-- di dalam file yang membutuhkan logout, misalnya header.html -->
+{% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}! <a href="{% url 'custom_logout' %}">Logout</a></p>
+{% endif %}
