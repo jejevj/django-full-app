@@ -25,6 +25,12 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
       rel="stylesheet"
     />
+    <!-- Datatables-->
+    
+    <link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css'%}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css'%}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css'%}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css'%}" />
 
     <!-- Icons -->
     <link rel="stylesheet" href="{% static 'vendor/fonts/fontawesome.css'%}" />
@@ -147,42 +153,42 @@
             <li class="menu-item">
               <a href="{% url 'dashboard' %}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="dashboard">Dashboards</div>
+                <div data-i18n="Dashboard">Dashboards</div>
               </a>
             </li>
             <!-- Monitoring -->
             <li class="menu-item">
               <a href="/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-eye"></i>
-                <div data-i18n="Dashboards">Monitoring</div>
+                <div data-i18n="Monitoring">Monitoring</div>
               </a>
             </li>
             <!-- Delivery -->
             <li class="menu-item">
               <a href="/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-truck"></i>
-                <div data-i18n="delivery">Delivery</div>
+                <div data-i18n="Delivery">Delivery</div>
               </a>
             </li>
             <!-- Customer -->
             <li class="menu-item">
               <a href="/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-users"></i>
-                <div data-i18n="customer">Customer</div>
+                <div data-i18n="Customer">Customer</div>
               </a>
             </li>
             <!-- Driver -->
             <li class="menu-item">
-              <a href="/dashboard" class="menu-link">
+              <a href="{% url 'driver' %}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-motorbike"></i>
-                <div data-i18n="driver">Driver</div>
+                <div data-i18n="Driver">Driver</div>
               </a>
             </li>
             <!-- History Driver -->
             <li class="menu-item">
               <a href="/dashboard" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-clock"></i>
-                <div data-i18n="history-driver">History Driver</div>
+                <div data-i18n="History Driver">History Driver</div>
               </a>
             </li>
           </ul>
@@ -325,6 +331,9 @@
 
     <!-- endbuild -->
     <!-- Vendors JS -->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js'%}"></script>
     <script src="{% static 'vendor/libs/@form-validation/umd/bundle/popular.min.js'%}"></script>
     <script src="{% static 'vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js'%}"></script>
     <script src="{% static 'vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js'%}"></script>
@@ -334,6 +343,7 @@
 
     <!-- Page JS -->
     <script src="{% static 'js/pages-auth.js'%}"></script>
+    {% comment %} <script src="{% static 'js/tables-datatables-basic.js'%}"></script> {% endcomment %}
     <!-- Page JS -->
     <script src="{% static 'js/cards-advance.js'%}"></script>
   </body>
