@@ -10,7 +10,7 @@
       >
         <div class="card-header flex-column flex-md-row">
           <div class="head-label text-center">
-            <h5 class="card-title mb-0">Data Driver</h5>
+            <h5 class="card-title mb-0">Data Customer</h5>
           </div>
           <div class="dt-action-buttons text-end pt-3 pt-md-0">
             <div class="dt-buttons btn-group flex-wrap">
@@ -19,7 +19,7 @@
                 tabindex="0"
                 aria-controls="DataTables_Table_0"
                 type="button"
-                href="{% url 'user_register' %}"
+                href="{% url 'customer_add' %}"
               >
                 <span
                   ><i class="ti ti-plus me-sm-1"></i>
@@ -39,9 +39,10 @@
         >
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>HP</th>
+              <th>Nama Customer</th>
+              <th>Alamat</th>
+              <th>Contact Person</th>
+              <th>Phone</th>
               <th>Created At</th>
               {% comment %} <th class="dtr-hidden" style="display: none">Photo</th>
               <th class="dtr-hidden" style="display: none">Actions</th> {% endcomment %}
@@ -72,15 +73,13 @@
                   </div>
                   <div class="d-flex flex-column">
                     <span class="emp_name text-truncate"
-                      >{{ user.username }}</span
-                    >
-                    <small class="emp_post text-truncate text-muted"
-                      >{{ user.email }}</small
+                      >{{ user.customer_name }}</span
                     >
                   </div>
                 </div>
               </td>
-              <td>{{ user.email }}</td>
+              <td>{{ user.address }}</td>
+              <td class="">{{ user.cp }}</td>
               <td class="">{{ user.hp }}</td>
               <td class="">{{ user.created_at }}</td>
               <td class="dtr-hidden" style="display: none">
