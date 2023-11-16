@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect
 from dashboard.decorators import login_required
-from .models import UserDriver, UserCustomer
+from .models import UserDriver, UserCustomer, Delivery
 
 from rest_framework import generics
 from .serializers import *
@@ -68,6 +68,33 @@ def customer_add(request):
         error_message = None
 
     return render(request, 'add_customer.html', {'error_message': error_message})
+
+@login_required
+def delivery_add(request):
+    if request.method == 'POST':
+        no_delivery = request.POST.get('no_delivery')
+        date = request.POST.get('date')
+        customer_name = request.POST.get('customer_name2')
+        address = request.POST.get('address')
+        cp = request.POST.get('cp')
+        hp = request.POST.get('hp')
+        driver_name = request.POST.get('driver_name2')
+        photo = request.FILES.get('photo')
+
+        # Validasi bahwa username belum digunakan
+        if Delivery.objects.filter(no_delivery=no_delivery).exists():
+            error_message = "Nomor Delivery Tidak Boleh Sama"
+        else:
+            # Buat objek UserCustom dan simpan ke database
+            user = Delivery(no_delivery=no_delivery,customer_name=customer_name, address=address, date=date, cp=cp, hp=hp,driver_name=driver_name, photo=photo)
+            user.save()
+
+            # Redirect ke halaman setelah pendaftaran berhasil
+            return redirect('customer')  # Ganti 'login' dengan nama URL halaman login
+    else:
+        error_message = None
+
+    return render(request, 'add_delivery.html', {'error_message': error_message})
 
 
 @login_required

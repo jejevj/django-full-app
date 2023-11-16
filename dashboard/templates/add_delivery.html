@@ -5,58 +5,88 @@
   <div class="col-xl">
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Tambahkan Customer</h5>
+        <h5 class="mb-0">Tambahkan Delivery</h5>
       </div>
       <div class="card-body">
-        {% if  error_message != None%}
-        
-        <div class="btn btn-danger btn-sm mb-3 disabled" disabled> {{error_message}}</div>
+        {% if error_message != None%}
+        <div class="btn btn-danger btn-sm mb-3 disabled" disabled>{{error_message}}</div>
         {% endif %}
-        
+
         <form method="post" enctype="multipart/form-data" id="cust">
           {% csrf_token %}
-          <div class="mb-3">
-            <label class="form-label" for="customer_name">Nama Customer</label>
-            <div class="input-group input-group-merge">
-              <span class="input-group-text"><i class="ti ti-user"></i></span>
-              <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="JohnDoe" aria-label="JohnDoe" aria-describedby="basic-icon-default-fullname2" required />
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="address">Address</label>
-            <div class="input-group input-group-merge">
-              <span class="input-group-text"><i class="ti ti-location"></i></span>
-              <textarea class="form-control" id="address" name="address" placeholder="Jl. ABC" aria-label="Jl. ABC" aria-describedby="basic-icon-default-fullname2" required></textarea>
-              {% comment %} <input type="text" class="form-control" id="address" name="address" placeholder="JohnDoe" aria-label="JohnDoe" aria-describedby="basic-icon-default-fullname2" required /> {% endcomment %}
-            </div>
-          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label" for="no_delivery">No Delivery</label>
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text"><i class="ti ti-notes"></i></span>
+                  <input type="text" class="form-control" id="no_delivery" name="no_delivery" aria-describedby="basic-icon-default-fullname2" required />
+                  <a onclick="setRandomCode()" class="btn btn-primary btn-sm" on>
+                    <span class="input-group-text"><i class="ti ti-refresh text-dark"></i></span>
+                  </a>
+                </div>
+              </div>
 
-          <div class="mb-3">
-            <label class="form-label" for="cp">Contact Person</label>
-            <div class="input-group input-group-merge">
-              <span class="input-group-text"><i class="ti ti-user"></i></span>
-              <input type="text" class="form-control" id="cp" name="cp" placeholder="Alex Dhoe" aria-label="alexDhoe" aria-describedby="basic-icon-default-fullname2" required />
+              <div class="mb-3">
+                <label class="form-label" for="date">Date</label>
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text"><i class="ti ti-calendar"></i></span>
+                  <input type="date" class="form-control" id="date" name="date" aria-label="alexDhoe" aria-describedby="basic-icon-default-fullname2" required />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="customer_name" class="form-label">Nama Customer</label>
+                <select onchange="handleDropdownChange()" id="customer_name" name="customer_name" class="select2 form-select form-select-lg" data-allow-clear="true">
+                  <option value="">Select Customer</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="address">Address</label>
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text"><i class="ti ti-location"></i></span>
+                  <textarea class="form-control" id="address" name="address" placeholder="Jl. ABC" aria-label="Jl. ABC" aria-describedby="basic-icon-default-fullname2" readonly></textarea>
+                  {% comment %} <input type="text" class="form-control" id="address" name="address" placeholder="JohnDoe" aria-label="JohnDoe" aria-describedby="basic-icon-default-fullname2" required /> {% endcomment %}
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="cp">Contact Person</label>
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text"><i class="ti ti-user"></i></span>
+                  <input type="text" class="form-control" id="cp" name="cp" placeholder="Alex Dhoe" aria-label="alexDhoe" aria-describedby="basic-icon-default-fullname2" readonly />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="hp">HP</label>
+                <div class="input-group input-group-merge">
+                  <span class="input-group-text"><i class="ti ti-phone"></i></span>
+                  <input type="hp" class="form-control" id="hp" name="hp" placeholder="08xx" readonly />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="photo">Photo</label>
+                <div class="input-group input-group-merge">
+                  <input type="file" class="form-control" id="photo" name="photo" accept="image/*" aria-describedby="basic-icon-default-photo2" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="driver_name" class="form-label">Nama Driver</label>
+                <select id="driver_name" onchange="handleDropdownChange2()" name="driver_name" class="select2 form-select form-select-lg" data-allow-clear="true">
+                  <option value="">Select Driver</option>
+                </select>
+              </div>
             </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label" for="hp">HP</label>
-            <div class="input-group input-group-merge">
-              <span class="input-group-text"><i class="ti ti-phone"></i></span>
-              <input type="hp" class="form-control" id="hp" name="hp" placeholder="08xx" required />
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="photo">Photo</label>
-            <div class="input-group input-group-merge">
-              <input type="file" class="form-control" id="photo" name="photo" accept="image/*" aria-describedby="basic-icon-default-photo2" required />
-            </div>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="map">Pilih Lokasi pada Peta</label>
-            <div id="map" style="height: 300px"></div>
-            <input type="hidden" id="lat" name="lat" />
-            <input type="hidden" id="lon" name="lon" />
-          </div>
+          <input type="hidden" class="form-control" id="customer_name2" name="customer_name2" />
+          <input type="hidden" class="form-control" id="driver_name2" name="driver_name2" />
+              
+          
+
           <button type="submit" class="btn btn-primary">Register</button>
         </form>
       </div>
@@ -64,53 +94,130 @@
   </div>
 </div>
 
-{% endblock %}
+{% endblock %} {% block addScript %}
 
-{% block addScript %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-      // Inisialisasi peta
-      var map = L.map('map').setView([-6.1661686, 106.8717686], 13);
+    // Ambil elemen dropdown
+    var customerDropdown = document.getElementById("customer_name");
 
-      // Tambahkan peta dasar
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
-
-      // Tambahkan marker yang dapat dipindahkan
-      var marker = L.marker([-6.1661686, 106.8717686], { draggable: true }).addTo(map);
-
-      // Tangkap perubahan posisi marker
-      marker.on('dragend', function (event) {
-          var marker = event.target;
-          var position = marker.getLatLng();
-
-          // Set nilai input lat dan lon
-          document.getElementById('lat').value = position.lat.toFixed(6);
-          document.getElementById('lon').value = position.lng.toFixed(6);
-          console.log(position.lat);
-          console.log(position.lng);
+    // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
+    fetch("http://127.0.0.1:8000/api/customer/")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        // Isi opsi dropdown dengan data pelanggan
+        data.forEach(function (customer) {
+          var option = document.createElement("option");
+          option.value = customer.id;
+          option.text = customer.customer_name;
+          customerDropdown.appendChild(option);
+          console.log(customer.id);
+        });
+      })
+      .catch(function (error) {
+        console.error("Error fetching customer data:", error);
       });
+  });
 
-      // Tambahkan listener untuk formulir disubmit
-      document.getElementById('cust').addEventListener('submit', function (event) {
-          // Update nilai default di model dengan nilai yang telah diubah oleh pengguna
-          document.getElementById('lat').value = document.getElementById('lat').value;
-          document.getElementById('lon').value = document.getElementById('lon').value;
+  document.addEventListener("DOMContentLoaded", function () {
+    // Ambil elemen dropdown
+    var driverDropdown = document.getElementById("driver_name");
 
-          // Tambahkan logika validasi lainnya sebelum formulir disubmit
-
-          // Contoh validasi sederhana
-          var lat = parseFloat(document.getElementById('lat').value);
-          var lon = parseFloat(document.getElementById('lon').value);
-
-          if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-              alert('Latitude dan longitude tidak valid.');
-              event.preventDefault(); // Mencegah formulir dikirim jika validasi gagal
-          } else {
-              console.log('Form submitted!');
-          }
+    // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
+    fetch("http://127.0.0.1:8000/api/driver/")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        // Isi opsi dropdown dengan data pelanggan
+        data.forEach(function (driver) {
+          var option = document.createElement("option");
+          option.value = driver.username;
+          option.text = driver.username;
+          console.log(driver.id);
+          driverDropdown.appendChild(option);
+        });
+      })
+      .catch(function (error) {
+        console.error("Error fetching driver data:", error);
       });
   });
 </script>
-{% endblock %}
+
+<script>
+    // Fungsi yang akan dipanggil saat dropdown berubah
+    function handleDropdownChange() {
+      // Ambil elemen dropdown
+      var customerDropdown = document.getElementById("customer_name");
+      var addressInput = document.getElementById("address");
+      var cpInput = document.getElementById("cp");
+      var hpInput = document.getElementById("hp");
+      var cnameInput = document.getElementById("customer_name2")
+      // Dapatkan nilai yang dipilih
+      var selectedCustomerId = customerDropdown.value;
+  
+      // Log nilai option yang dipilih ke console
+      console.log("Selected Customer ID:", selectedCustomerId);
+      // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
+      fetch("http://127.0.0.1:8000/api/customer/" + selectedCustomerId + "/")
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (customer) {
+          // Tampilkan informasi pelanggan ke konsol
+          // Setel nilai elemen formulir dengan detail pelanggan
+          addressInput.value = customer.address;
+          cpInput.value = customer.cp;
+          hpInput.value = customer.hp;
+          cnameInput.value = customer.customer_name;
+  
+        })
+        
+        .catch(function (error) {
+          console.error("Error fetching customer data:", error);
+        });
+      // Jika Anda ingin menampilkan nama pelanggan, Anda dapat menggunakan:
+      // var selectedCustomerName = customerDropdown.options[customerDropdown.selectedIndex].text;
+      // console.log("Selected Customer Name:", selectedCustomerName);
+    }
+  </script>
+
+  <script>
+    // Fungsi yang akan dipanggil saat dropdown berubah
+    function handleDropdownChange2() {
+      // Ambil elemen dropdown
+      var customerDropdown = document.getElementById("driver_name");
+      var dnameInput = document.getElementById("driver_name2")
+      // Dapatkan nilai yang dipilih
+      var selectedCustomerId = customerDropdown.value;
+        dnameInput.value = selectedCustomerId;
+
+      // Log nilai option yang dipilih ke console
+      console.log("Selected Customer ID:", selectedCustomerId);
+      // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
+    }
+  </script>
+
+<script>
+  // Fungsi untuk menghasilkan kode acak dengan awalan "DEL-"
+  function generateRandomCode() {
+    var randomNo = Math.floor(100000 + Math.random() * 900000); // Angka acak antara 1000 dan 9999
+    return "DEL-" + randomNo;
+  }
+
+  // Fungsi yang akan dijalankan saat halaman dimuat (onload)
+  function setRandomCode() {
+    // Dapatkan elemen input
+    var noDeliveryInput = document.getElementById("no_delivery");
+
+    // Set nilai input dengan kode acak
+    noDeliveryInput.value = generateRandomCode();
+  }
+
+  // Panggil fungsi setRandomCode saat halaman dimuat
+  document.addEventListener("DOMContentLoaded", setRandomCode);
+</script>
+
+{% endblock addScript %}

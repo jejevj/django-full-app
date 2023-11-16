@@ -46,13 +46,12 @@ class UserCustomer(models.Model):
         return None
     
 class Delivery(models.Model):
-    no_delivery = models.AutoField(primary_key=True,unique=True)
+    no_delivery = models.TextField(primary_key=True,unique=True)
     date = models.DateField()
-    customer_name = models.TextField()
+    customer_name = models.TextField(null=True)
     address = models.TextField()
     cp = models.TextField()
     hp = models.TextField()
-    driver_name = models.TextField()
     driver_name = models.TextField()
     photo = models.ImageField(upload_to='static/delivery_image/', default='default_user.png')
     def get_photo_base64(self):
