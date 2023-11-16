@@ -44,3 +44,20 @@ class UserCustomer(models.Model):
             with open(self.photo.path, "rb") as image_file:
                 return base64.b64encode(image_file.read()).decode('utf-8')
         return None
+    
+class Delivery(models.Model):
+    no_delivery = models.AutoField(primary_key=True,unique=True)
+    date = models.DateField()
+    customer_name = models.TextField()
+    address = models.TextField()
+    cp = models.TextField()
+    hp = models.TextField()
+    driver_name = models.TextField()
+    driver_name = models.TextField()
+    photo = models.ImageField(upload_to='static/delivery_image/', default='default_user.png')
+    def get_photo_base64(self):
+        if self.photo:
+            with open(self.photo.path, "rb") as image_file:
+                return base64.b64encode(image_file.read()).decode('utf-8')
+        return None
+    

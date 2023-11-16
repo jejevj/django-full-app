@@ -4,7 +4,7 @@ from dashboard.decorators import login_required
 from .models import UserDriver, UserCustomer
 
 from rest_framework import generics
-from .serializers import DriverSerializer
+from .serializers import *
 
 @login_required
 def dashboard(request):
@@ -74,8 +74,30 @@ def customer_add(request):
 def customer_list(request):
     users = UserCustomer.objects.all()
     return render(request, 'customer.html', {'users': users})
+
+
+
+
+
 # API
 
 class DriverListApiView(generics.ListAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = DriverSerializer
+    
+    
+class UserDriverListCreateView(generics.ListCreateAPIView):
+    queryset = UserDriver.objects.all()
+    serializer_class = UserDriverSerializer
+
+class UserDriverDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserDriver.objects.all()
+    serializer_class = UserDriverSerializer
+
+class UserCustomerListCreateView(generics.ListCreateAPIView):
+    queryset = UserCustomer.objects.all()
+    serializer_class = UserCustomerSerializer
+
+class UserCustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserCustomer.objects.all()
+    serializer_class = UserCustomerSerializer
