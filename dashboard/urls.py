@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 urlpatterns = [
+    
     path('', views.dashboard, name='dashboard'),
     path('driver/', views.user_list, name='driver'),
     path('customer/', views.customer_list, name='customer'),

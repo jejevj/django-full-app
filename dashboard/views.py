@@ -50,6 +50,8 @@ def customer_add(request):
         address = request.POST.get('address')
         cp = request.POST.get('cp')
         hp = request.POST.get('hp')
+        lat = request.POST.get('lat')
+        lon = request.POST.get('lon')
         photo = request.FILES.get('photo')
 
         # Validasi bahwa username belum digunakan
@@ -57,7 +59,7 @@ def customer_add(request):
             error_message = "Nama Customer Sudah Ada."
         else:
             # Buat objek UserCustom dan simpan ke database
-            user = UserCustomer(customer_name=customer_name, address=address, cp=cp, hp=hp, photo=photo)
+            user = UserCustomer(customer_name=customer_name, address=address, cp=cp, hp=hp, photo=photo,lat=lat,lon=lon)
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil

@@ -68,6 +68,7 @@
       href="{% static 'vendor/libs/select2/select2.css' %}"
     />
     <link rel="stylesheet" href="{% static 'vendor/libs/plyr/plyr.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendor/libs/leaflet/leaflet.css'%}" />
 
     <!-- Page CSS -->
 
@@ -327,7 +328,7 @@
     <!-- / Layout wrapper -->
 
     <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
+    <!-- build:js vendor/js/core.js -->
 
     <script src="{% static 'vendor/libs/jquery/jquery.js'%}"></script>
     <script src="{% static 'vendor/libs/popper/popper.js'%}"></script>
@@ -347,6 +348,7 @@
     <script src="{% static 'vendor/libs/@form-validation/umd/bundle/popular.min.js'%}"></script>
     <script src="{% static 'vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js'%}"></script>
     <script src="{% static 'vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js'%}"></script>
+    <script src="{% static 'vendor/libs/leaflet/leaflet.js'%}"></script>
 
     <!-- Main JS -->
     <script src="{% static 'js/main.js'%}"></script>
@@ -356,5 +358,14 @@
     {% comment %} <script src="{% static 'js/tables-datatables-basic.js'%}"></script> {% endcomment %}
     <!-- Page JS -->
     <script src="{% static 'js/cards-advance.js'%}"></script>
+    <script src="{% static 'js/maps-leaflet.js'%}"></script>
+
+    {% block addScript %}{% endblock addScript %}
+    
+  
+  
+  
+  
+  
   </body>
 </html>

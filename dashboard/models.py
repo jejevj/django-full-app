@@ -35,8 +35,8 @@ class UserCustomer(models.Model):
     cp = models.TextField()
     hp = models.TextField()
     photo = models.ImageField(upload_to='static/customer_photo/', default='default_user.png')
-    lat = models.DecimalField(max_digits=9, decimal_places=6, default=-6.1661686)
-    lon = models.DecimalField(max_digits=9, decimal_places=6, default=106.8717686)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, default=-6.1661686, blank=True, null=True)
+    lon = models.DecimalField(max_digits=9, decimal_places=6, default=106.8717686, blank=True, null=True)
     created_at = models.DateField(auto_now=True)
     
     def get_photo_base64(self):

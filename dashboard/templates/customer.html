@@ -43,6 +43,8 @@
               <th>Alamat</th>
               <th>Contact Person</th>
               <th>Phone</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
               <th>Created At</th>
               {% comment %} <th class="dtr-hidden" style="display: none">Photo</th>
               <th class="dtr-hidden" style="display: none">Actions</th> {% endcomment %}
@@ -81,6 +83,8 @@
               <td>{{ user.address }}</td>
               <td class="">{{ user.cp }}</td>
               <td class="">{{ user.hp }}</td>
+              <td class="">{{ user.lat }}</td>
+              <td class="">{{ user.lon }}</td>
               <td class="">{{ user.created_at }}</td>
               <td class="dtr-hidden" style="display: none">
                 {% if user.photo %}
