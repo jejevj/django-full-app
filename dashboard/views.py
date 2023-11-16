@@ -108,6 +108,11 @@ def delivery_list(request):
     return render(request, 'delivery.html', {'items': items})
 
 
+@login_required
+def map(request):
+    return render(request, 'map.html')
+
+
 
 
 

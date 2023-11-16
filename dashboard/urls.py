@@ -9,6 +9,7 @@ urlpatterns = [
     path('tambah_user/', user_register, name='user_register'),
     path('tambah_customer/', customer_add, name='customer_add'),
     path('tambah_delivery/', delivery_add, name='delivery_add'),
+    path('monitoring/', map, name='monitoring'),
     
     # API
     # path('api/drivers/', DriverListApiView.as_view(), name='driver-list-api'),
