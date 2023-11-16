@@ -102,6 +102,11 @@ def customer_list(request):
     users = UserCustomer.objects.all()
     return render(request, 'customer.html', {'users': users})
 
+@login_required
+def delivery_list(request):
+    items = Delivery.objects.all()
+    return render(request, 'delivery.html', {'items': items})
+
 
 
 
