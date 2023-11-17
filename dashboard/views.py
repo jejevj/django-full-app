@@ -111,8 +111,15 @@ def delivery_list(request):
 
 
 @login_required
-def map(request):
-    return render(request, 'map.html')
+def monitoring_list(request):
+    items = Delivery.objects.all()
+    return render(request, 'monitoring.html', {'items': items})
+
+
+@login_required
+def map(request,pk):
+    items = Delivery.objects.get(pk=pk)
+    return render(request, 'map.html',{'items':items})
 
 
 

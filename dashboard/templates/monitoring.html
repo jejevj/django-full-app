@@ -1,0 +1,55 @@
+{% extends "layouts.html" %} {% block pagecontent %}
+
+<div class="container my-2">
+  <div class="card">
+    <div class="card-datatable table-responsive pt-0">
+      <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+        <div class="card-header flex-column flex-md-row">
+          <div class="head-label text-center">
+            <h5 class="card-title mb-0">Monitoring Delivery</h5>
+          </div>
+        </div>
+        <table class="datatables-basic table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1163px">
+          <thead>
+            <tr>
+              <th>No Delivery</th>
+              <th>Nama Customer</th>
+              <th>Contact Person</th>
+              <th>Phone</th>
+              <th>Maps</th>
+              <th>Driver</th>
+              {% comment %}
+              <th>Status</th>
+              {% endcomment %} {% comment %}
+              <th class="dtr-hidden" style="display: none">Photo</th>
+              <th class="dtr-hidden" style="display: none">Actions</th>
+              {% endcomment %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td>{{ item.no_delivery }}</td>
+              <td>{{ item.customer_name }}</td>
+              <td class="">{{ item.cp }}</td>
+              <td class="">{{ item.hp }}</td>
+              <td class="">
+                <a href="/monitoring/{{item.no_delivery}}" class="btn btn-primary btn-sm">Buka Map</a>
+              </td>
+              <td class="">{{ item.driver_name }}</td>
+              {% comment %}
+              <td class="">{{ item.status }}</td>
+              {% endcomment %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% block addScript %}
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+{% endblock addScript %} {% endblock pagecontent %}
