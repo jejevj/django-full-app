@@ -50,10 +50,15 @@ class Delivery(models.Model):
     date = models.DateField()
     customer_name = models.TextField(null=True)
     address = models.TextField()
+    cust_lat = models.DecimalField(max_digits=9, decimal_places=6,null=True)
+    cust_lon = models.DecimalField(max_digits=9, decimal_places=6,null=True)
     cp = models.TextField()
     hp = models.TextField()
     driver_name = models.TextField()
+    driver_lat = models.DecimalField(max_digits=9, decimal_places=6, default=-6.1661686)
+    driver_lon = models.DecimalField(max_digits=9, decimal_places=6, default=106.8717686)
     photo = models.ImageField(upload_to='static/delivery_image/', default='default_user.png')
+    status = models.TextField(default="Pickup")
     def get_photo_base64(self):
         if self.photo:
             with open(self.photo.path, "rb") as image_file:

@@ -84,6 +84,8 @@
           </div>
           <input type="hidden" class="form-control" id="customer_name2" name="customer_name2" />
           <input type="hidden" class="form-control" id="driver_name2" name="driver_name2" />
+          <input type="hidden" class="form-control" id="cust_lat" name="cust_lat" />
+          <input type="hidden" class="form-control" id="cust_lon" name="cust_lon" />
               
           
 
@@ -154,7 +156,9 @@
       var addressInput = document.getElementById("address");
       var cpInput = document.getElementById("cp");
       var hpInput = document.getElementById("hp");
-      var cnameInput = document.getElementById("customer_name2")
+      var cnameInput = document.getElementById("customer_name2");
+      var custLat = document.getElementById("cust_lat");
+      var custLon = document.getElementById("cust_lon");
       // Dapatkan nilai yang dipilih
       var selectedCustomerId = customerDropdown.value;
   
@@ -172,6 +176,8 @@
           cpInput.value = customer.cp;
           hpInput.value = customer.hp;
           cnameInput.value = customer.customer_name;
+          custLat.value = customer.lat;
+          custLon.value = customer.lon;
   
         })
         

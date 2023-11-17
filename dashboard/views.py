@@ -76,6 +76,8 @@ def delivery_add(request):
         date = request.POST.get('date')
         customer_name = request.POST.get('customer_name2')
         address = request.POST.get('address')
+        cust_lat = request.POST.get('cust_lat')
+        cust_lon = request.POST.get('cust_lon')
         cp = request.POST.get('cp')
         hp = request.POST.get('hp')
         driver_name = request.POST.get('driver_name2')
@@ -86,7 +88,7 @@ def delivery_add(request):
             error_message = "Nomor Delivery Tidak Boleh Sama"
         else:
             # Buat objek UserCustom dan simpan ke database
-            user = Delivery(no_delivery=no_delivery,customer_name=customer_name, address=address, date=date, cp=cp, hp=hp,driver_name=driver_name, photo=photo)
+            user = Delivery(no_delivery=no_delivery,customer_name=customer_name,cust_lat=cust_lat,cust_lon=cust_lon, address=address, date=date, cp=cp, hp=hp,driver_name=driver_name, photo=photo)
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
