@@ -35,7 +35,7 @@ def user_register(request):
 
     return render(request, 'add_driver.html', {'error_message': error_message})
 
-@login_required
+@login_required 
 def user_list(request):
     users = UserDriver.objects.all()
     return render(request, 'driver.html', {'users': users})
