@@ -1,10 +1,10 @@
 
 from django.shortcuts import render, redirect
 from dashboard.decorators import login_required
-from .models import UserDriver, UserCustomer
+from .models import UserDriver, UserCustomer, Delivery
 
 from rest_framework import generics
-from .serializers import DriverSerializer
+from .serializers import *
 
 @login_required
 def dashboard(request):
@@ -50,6 +50,8 @@ def customer_add(request):
         address = request.POST.get('address')
         cp = request.POST.get('cp')
         hp = request.POST.get('hp')
+        lat = request.POST.get('lat')
+        lon = request.POST.get('lon')
         photo = request.FILES.get('photo')
 
         # Validasi bahwa username belum digunakan
@@ -57,7 +59,7 @@ def customer_add(request):
             error_message = "Nama Customer Sudah Ada."
         else:
             # Buat objek UserCustom dan simpan ke database
-            user = UserCustomer(customer_name=customer_name, address=address, cp=cp, hp=hp, photo=photo)
+            user = UserCustomer(customer_name=customer_name, address=address, cp=cp, hp=hp, photo=photo,lat=lat,lon=lon)
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
@@ -67,13 +69,81 @@ def customer_add(request):
 
     return render(request, 'add_customer.html', {'error_message': error_message})
 
+@login_required
+def delivery_add(request):
+    if request.method == 'POST':
+        no_delivery = request.POST.get('no_delivery')
+        date = request.POST.get('date')
+        customer_name = request.POST.get('customer_name2')
+        address = request.POST.get('address')
+        cust_lat = request.POST.get('cust_lat')
+        cust_lon = request.POST.get('cust_lon')
+        cp = request.POST.get('cp')
+        hp = request.POST.get('hp')
+        driver_name = request.POST.get('driver_name2')
+        photo = request.FILES.get('photo')
+
+        # Validasi bahwa username belum digunakan
+        if Delivery.objects.filter(no_delivery=no_delivery).exists():
+            error_message = "Nomor Delivery Tidak Boleh Sama"
+        else:
+            # Buat objek UserCustom dan simpan ke database
+            user = Delivery(no_delivery=no_delivery,customer_name=customer_name,cust_lat=cust_lat,cust_lon=cust_lon, address=address, date=date, cp=cp, hp=hp,driver_name=driver_name, photo=photo)
+            user.save()
+
+            # Redirect ke halaman setelah pendaftaran berhasil
+            return redirect('customer')  # Ganti 'login' dengan nama URL halaman login
+    else:
+        error_message = None
+
+    return render(request, 'add_delivery.html', {'error_message': error_message})
+
 
 @login_required
 def customer_list(request):
     users = UserCustomer.objects.all()
     return render(request, 'customer.html', {'users': users})
+
+@login_required
+def delivery_list(request):
+    items = Delivery.objects.all()
+    return render(request, 'delivery.html', {'items': items})
+
+
+@login_required
+def monitoring_list(request):
+    items = Delivery.objects.all()
+    return render(request, 'monitoring.html', {'items': items})
+
+
+@login_required
+def map(request,pk):
+    items = Delivery.objects.get(pk=pk)
+    return render(request, 'map.html',{'items':items})
+
+
+
+
+
 # API
 
 class DriverListApiView(generics.ListAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = DriverSerializer
+    
+    
+class UserDriverListCreateView(generics.ListCreateAPIView):
+    queryset = UserDriver.objects.all()
+    serializer_class = UserDriverSerializer
+
+class UserDriverDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserDriver.objects.all()
+    serializer_class = UserDriverSerializer
+
+class UserCustomerListCreateView(generics.ListCreateAPIView):
+    queryset = UserCustomer.objects.all()
+    serializer_class = UserCustomerSerializer
+
+class UserCustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserCustomer.objects.all()
+    serializer_class = UserCustomerSerializer
