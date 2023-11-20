@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-7esd@008t#7lt+-2w((f80kyltmr2y-1ox#d33ncd_7=o*axdw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'garudajayasakti.azurewebsites.net',
+]
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = 'garudajayasakti.azurewebsites.net'
 
 
 # Application definition
