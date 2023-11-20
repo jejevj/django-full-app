@@ -26,11 +26,11 @@ SECRET_KEY = 'django-insecure-7esd@008t#7lt+-2w((f80kyltmr2y-1ox#d33ncd_7=o*axdw
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'garudajayasakti.azurewebsites.net',
+    'garudajayasaktimonitoring.azurewebsites.net',
 ]
 SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = 'garudajayasakti.azurewebsites.net'
+CSRF_COOKIE_DOMAIN = 'garudajayasaktimonitoring.azurewebsites.net'
 
 
 # Application definition
