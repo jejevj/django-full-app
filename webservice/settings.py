@@ -27,11 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'garudajayasaktimonitoring.azurewebsites.net',
+    'localhost',
+    '127.0.0.1'
 ]
-SECURE_SSL_REDIRECT = True
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = 'garudajayasaktimonitoring.azurewebsites.net'
-
 
 # Application definition
 
