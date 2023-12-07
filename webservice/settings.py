@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-7esd@008t#7lt+-2w((f80kyltmr2y-1ox#d33ncd_7=o*axdw
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'garudajayasaktimonitoring.azurewebsites.net',
+    'garudamonitorbaru.azurewebsites.net',
     'localhost',
     '127.0.0.1'
 ]
