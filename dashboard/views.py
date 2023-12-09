@@ -5,13 +5,16 @@ from .models import UserDriver, UserCustomer, Delivery
 
 from rest_framework import generics
 from .serializers import *
+from django.views.decorators.csrf import *
 
 @login_required
+@csrf_exempt
 def dashboard(request):
     # Logika tampilan dashboard
     return render(request, 'dashboard.html')
 
 @login_required
+@csrf_exempt
 def user_register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -36,6 +39,7 @@ def user_register(request):
     return render(request, 'add_driver.html', {'error_message': error_message})
 
 @login_required 
+@csrf_exempt
 def user_list(request):
     users = UserDriver.objects.all()
     return render(request, 'driver.html', {'users': users})
@@ -44,6 +48,7 @@ def user_list(request):
 
 
 @login_required
+@csrf_exempt
 def customer_add(request):
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name')
@@ -70,6 +75,7 @@ def customer_add(request):
     return render(request, 'add_customer.html', {'error_message': error_message})
 
 @login_required
+@csrf_exempt
 def delivery_add(request):
     if request.method == 'POST':
         no_delivery = request.POST.get('no_delivery')
@@ -100,23 +106,27 @@ def delivery_add(request):
 
 
 @login_required
+@csrf_exempt
 def customer_list(request):
     users = UserCustomer.objects.all()
     return render(request, 'customer.html', {'users': users})
 
 @login_required
+@csrf_exempt
 def delivery_list(request):
     items = Delivery.objects.all()
     return render(request, 'delivery.html', {'items': items})
 
 
 @login_required
+@csrf_exempt
 def monitoring_list(request):
     items = Delivery.objects.all()
     return render(request, 'monitoring.html', {'items': items})
 
 
 @login_required
+@csrf_exempt
 def map(request,pk):
     items = Delivery.objects.get(pk=pk)
     return render(request, 'map.html',{'items':items})
