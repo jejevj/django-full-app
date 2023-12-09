@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7esd@008t#7lt+-2w((f80kyltmr2y-1ox#d33ncd_7=o*axdw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    'garudamonitorbaru.azurewebsites.net',
+    'garudadriver.azurewebsites.net',
     'localhost',
     '127.0.0.1'
 ]
