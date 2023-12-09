@@ -32,8 +32,8 @@ ALLOWED_HOSTS = [
 ]
 
 CORS_ALLOWED_ORIGINS =[
-    'https://garudadriver.azurewebsites.net/',
-    'http://garudadriver.azurewebsites.net/'
+    'https://garudadriver.azurewebsites.net',
+    'http://garudadriver.azurewebsites.net'
     
 ]
 # Application definition
