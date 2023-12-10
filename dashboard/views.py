@@ -150,6 +150,10 @@ class UserCustomerListCreateView(generics.ListCreateAPIView):
     queryset = UserCustomer.objects.all()
     serializer_class = UserCustomerSerializer
 
+class DeliveryListCreateView(generics.ListCreateAPIView):
+    queryset = Delivery.objects.all()
+    serializer_class = DeliveryCustomerSerializer
+
 class UserCustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserCustomer.objects.all()
     serializer_class = UserCustomerSerializer
