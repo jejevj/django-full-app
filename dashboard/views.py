@@ -37,7 +37,6 @@ def user_register(request):
 
     return render(request, 'add_driver.html', {'error_message': error_message})
 
-@login_required 
 @csrf_exempt
 def user_list(request):
     users = UserDriver.objects.all()
@@ -102,7 +101,6 @@ def delivery_add(request):
     return render(request, 'add_delivery.html', {'error_message': error_message})
 
 
-@login_required
 @csrf_exempt
 def customer_list(request):
     users = UserCustomer.objects.all()
@@ -114,14 +112,12 @@ def delivery_list(request):
     return render(request, 'delivery.html', {'items': items})
 
 
-@login_required
 @csrf_exempt
 def monitoring_list(request):
     items = Delivery.objects.all()
     return render(request, 'monitoring.html', {'items': items})
 
 
-@login_required
 @csrf_exempt
 def map(request,pk):
     items = Delivery.objects.get(pk=pk)

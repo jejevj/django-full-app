@@ -16,8 +16,9 @@ urlpatterns = [
     # path('api/drivers/', DriverListApiView.as_view(), name='driver-list-api'),
     path('api/driver/', UserDriverListCreateView.as_view(), name='driver-list-create'),
     path('api/driver/<int:pk>/', UserDriverDetailView.as_view(), name='driver-detail'),
+    
     path('api/update-driver/<int:pk>/', DriverUpdateView.as_view(), name='driver-update'),
-    path('api/delivery/', DeliveryListCreateView.as_view(), name='delivery'),
+    path('api/delivery/', DeliveryListCreateView.as_view(), name='delivery-api'),
 
     path('api/customer/', UserCustomerListCreateView.as_view(), name='customer-list-create'),
     path('api/customer/<int:pk>/', UserCustomerDetailView.as_view(), name='customer-detail'),
