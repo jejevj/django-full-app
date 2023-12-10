@@ -33,9 +33,12 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1'
 ]
+CORS_ALLOW_ALL_ORIGINS =True
 
 CORS_ALLOWED_ORIGINS =[
     
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
     'https://garudadriver.azurewebsites.net',
     'http://garudadriver.azurewebsites.net'
     
@@ -53,13 +56,15 @@ INSTALLED_APPS = [
     'authuser',
     'dashboard',
     'login',
-    'rest_framework'
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     # Add whitenoise middleware after the security middleware             
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
