@@ -34,34 +34,57 @@
   document.addEventListener("DOMContentLoaded", function () {
     var map = L.map("map");
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
+    // Tambahkan peta Google Streets
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(map);
 
-    var startIcon = L.icon({
-      iconUrl: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
-      iconSize: [60, 60],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32],
+    // Tambahkan peta OpenStreetMap sebagai lapisan cadangan
+    var osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
     });
 
+    // Set tampilan peta
+    map.setView([{{items.driver_lat}}, {{items.driver_lon}}], 13);
+
+    // Icon untuk titik awal
+    var startIcon = L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
+        iconSize: [60, 60],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+    });
+
+    // Waypoints
     var waypoint1 = L.latLng({{items.driver_lat}}, {{items.driver_lon}});
     var waypoint2 = L.latLng({{items.cust_lat}}, {{items.cust_lon}});
 
+    // Layer untuk marker waypoint
     var waypointsLayer = L.layerGroup([L.marker(waypoint1, { icon: startIcon }), L.marker(waypoint2)]).addTo(map);
 
+    // Kontrol rute
     L.Routing.control({
-      waypoints: [waypoint1, waypoint2],
-      routeWhileDragging: true,
-      show: true, // Hide the turn-by-turn directions
-      alternatives: true, // Display alternative routes
-      createMarker: function (i, waypoint, n) {
-        return L.marker(waypoint.latLng, {
-          icon: i === 0 ? startIcon : new L.Icon.Default(),
-        });
-      },
+        waypoints: [waypoint1, waypoint2],
+        routeWhileDragging: true,
+        show: true, // Sembunyikan petunjuk arah step-by-step
+        alternatives: true, // Tampilkan rute alternatif
+        createMarker: function (i, waypoint, n) {
+            return L.marker(waypoint.latLng, {
+                icon: i === 0 ? startIcon : new L.Icon.Default(),
+            });
+        },
     }).addTo(map);
-  });
+
+    // Kontrol lapisan
+    var baseLayers = {
+        "Google Streets": googleStreets,
+        "OpenStreetMap": osmLayer,
+    };
+
+    L.control.layers(baseLayers).addTo(map);
+});
+
 </script>
 
 {% endblock pagecontent %}

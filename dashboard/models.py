@@ -15,8 +15,6 @@ class UserDriver(models.Model):
     created_at = models.DateField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        # Hash password sebelum menyimpan
-        self.password = make_password(self.password)
         super().save(*args, **kwargs)
 
     def check_password(self, raw_password):

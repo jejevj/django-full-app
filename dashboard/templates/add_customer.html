@@ -69,48 +69,54 @@
 {% block addScript %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-      // Inisialisasi peta
-      var map = L.map('map').setView([-6.1661686, 106.8717686], 13);
+    // Inisialisasi peta
+    var map = L.map('map').setView([-6.1661686, 106.8717686], 13);
 
-      // Tambahkan peta dasar
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
+    // Set nilai default untuk lat dan lon
+    document.getElementById('lat').value = -6.1661686.toFixed(6);
+    document.getElementById('lon').value = 106.8717686.toFixed(6);
 
-      // Tambahkan marker yang dapat dipindahkan
-      var marker = L.marker([-6.1661686, 106.8717686], { draggable: true }).addTo(map);
+    // Tambahkan peta Google Streets
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    }).addTo(map);
 
-      // Tangkap perubahan posisi marker
-      marker.on('dragend', function (event) {
-          var marker = event.target;
-          var position = marker.getLatLng();
+    // Tambahkan marker yang dapat dipindahkan
+    var marker = L.marker([-6.1661686, 106.8717686], { draggable: true }).addTo(map);
 
-          // Set nilai input lat dan lon
-          document.getElementById('lat').value = position.lat.toFixed(6);
-          document.getElementById('lon').value = position.lng.toFixed(6);
-          console.log(position.lat);
-          console.log(position.lng);
-      });
+    // Tangkap perubahan posisi marker
+    marker.on('dragend', function (event) {
+        var marker = event.target;
+        var position = marker.getLatLng();
 
-      // Tambahkan listener untuk formulir disubmit
-      document.getElementById('cust').addEventListener('submit', function (event) {
-          // Update nilai default di model dengan nilai yang telah diubah oleh pengguna
-          document.getElementById('lat').value = document.getElementById('lat').value;
-          document.getElementById('lon').value = document.getElementById('lon').value;
+        // Set nilai input lat dan lon
+        document.getElementById('lat').value = position.lat.toFixed(6);
+        document.getElementById('lon').value = position.lng.toFixed(6);
+        console.log(position.lat);
+        console.log(position.lng);
+    });
 
-          // Tambahkan logika validasi lainnya sebelum formulir disubmit
+    // Tambahkan listener untuk formulir disubmit
+    document.getElementById('cust').addEventListener('submit', function (event) {
+        // Update nilai default di model dengan nilai yang telah diubah oleh pengguna
+        document.getElementById('lat').value = document.getElementById('lat').value;
+        document.getElementById('lon').value = document.getElementById('lon').value;
 
-          // Contoh validasi sederhana
-          var lat = parseFloat(document.getElementById('lat').value);
-          var lon = parseFloat(document.getElementById('lon').value);
+        // Tambahkan logika validasi lainnya sebelum formulir disubmit
 
-          if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-              alert('Latitude dan longitude tidak valid.');
-              event.preventDefault(); // Mencegah formulir dikirim jika validasi gagal
-          } else {
-              console.log('Form submitted!');
-          }
-      });
-  });
+        // Contoh validasi sederhana
+        var lat = parseFloat(document.getElementById('lat').value);
+        var lon = parseFloat(document.getElementById('lon').value);
+
+        if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+            alert('Latitude dan longitude tidak valid.');
+            event.preventDefault(); // Mencegah formulir dikirim jika validasi gagal
+        } else {
+            console.log('Form submitted!');
+        }
+    });
+});
+
 </script>
 {% endblock %}
