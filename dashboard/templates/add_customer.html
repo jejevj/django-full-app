@@ -13,7 +13,7 @@
         <div class="btn btn-danger btn-sm mb-3 disabled" disabled> {{error_message}}</div>
         {% endif %}
         
-        <form method="post" enctype="multipart/form-data" id="cust">
+        <form method="post" enctype="multipart/form-data" id="cust" action="{% url 'customer_add' %}">
           {% csrf_token %}
           <div class="mb-3">
             <label class="form-label" for="customer_name">Nama Customer</label>

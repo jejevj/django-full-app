@@ -13,7 +13,6 @@ def dashboard(request):
     # Logika tampilan dashboard
     return render(request, 'dashboard.html')
 
-@login_required
 @csrf_exempt
 def user_register(request):
     if request.method == 'POST':
@@ -47,7 +46,6 @@ def user_list(request):
 # views.py
 
 
-@login_required
 @csrf_exempt
 def customer_add(request):
     if request.method == 'POST':
@@ -74,7 +72,6 @@ def customer_add(request):
 
     return render(request, 'add_customer.html', {'error_message': error_message})
 
-@login_required
 @csrf_exempt
 def delivery_add(request):
     if request.method == 'POST':
@@ -111,7 +108,6 @@ def customer_list(request):
     users = UserCustomer.objects.all()
     return render(request, 'customer.html', {'users': users})
 
-@login_required
 @csrf_exempt
 def delivery_list(request):
     items = Delivery.objects.all()
