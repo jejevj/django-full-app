@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-7esd@008t#7lt+-2w((f80kyltmr2y-1ox#d33ncd_7=o*axdw
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'garudadriver.azurewebsites.net',
     '*'
 ]
 
@@ -125,14 +126,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
