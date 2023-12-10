@@ -104,7 +104,7 @@
     var customerDropdown = document.getElementById("customer_name");
 
     // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
-    fetch("http://127.0.0.1:8000/api/customer/")
+    fetch("https://garudadriver.azurewebsites.net/api/customer/")
       .then(function (response) {
         return response.json();
       })
@@ -128,7 +128,7 @@
     var driverDropdown = document.getElementById("driver_name");
 
     // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
-    fetch("http://127.0.0.1:8000/api/driver/")
+    fetch("https://garudadriver.azurewebsites.net/api/driver/")
       .then(function (response) {
         return response.json();
       })
@@ -165,7 +165,7 @@
       // Log nilai option yang dipilih ke console
       console.log("Selected Customer ID:", selectedCustomerId);
       // Lakukan permintaan GET ke API untuk mendapatkan data pelanggan
-      fetch("http://127.0.0.1:8000/api/customer/" + selectedCustomerId + "/")
+      fetch("https://garudadriver.azurewebsites.net/api/customer/" + selectedCustomerId + "/")
         .then(function (response) {
           return response.json();
         })
