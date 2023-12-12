@@ -133,7 +133,7 @@ class DriverListApiView(generics.ListAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = DriverSerializer
     
-    
+# DRIVER API 
 class UserDriverListCreateView(generics.ListCreateAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = UserDriverSerializer
@@ -142,14 +142,28 @@ class UserDriverDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = UserDriverSerializer
 
+class UserDriverDetailView2(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserDriverSerializer
+    lookup_field = 'username'
+
+    def get_queryset(self):
+        username = self.kwargs['username']
+        return UserDriver.objects.filter(username=username)
+    
+# CUSTOMER API
 class UserCustomerListCreateView(generics.ListCreateAPIView):
     queryset = UserCustomer.objects.all()
     serializer_class = UserCustomerSerializer
+    
+class UserCustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserCustomer.objects.all()
+    serializer_class = UserCustomerSerializer
 
+# DELIVERY API
 class DeliveryListCreateView(generics.ListCreateAPIView):
     queryset = Delivery.objects.all()
     serializer_class = DeliveryCustomerSerializer
 
-class UserCustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserCustomer.objects.all()
-    serializer_class = UserCustomerSerializer
+class DeliveryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Delivery.objects.all()
+    serializer_class = DeliveryCustomerSerializer
