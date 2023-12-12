@@ -25,5 +25,5 @@ urlpatterns = [
     
     
     path('api/delivery/', DeliveryListCreateView.as_view(), name='delivery'),
-    path('api/delivery/<str:pk>', DeliveryDetailView.as_view(), name='delivery-detail'),
+    path('api/delivery-by-id/<str:pk>', DeliveryDetailView.as_view(), name='delivery-detail'),
 ]
