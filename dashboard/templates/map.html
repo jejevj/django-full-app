@@ -1,5 +1,4 @@
 {% extends "layouts.html" %} {% block pagecontent %}
-
 <div class="container mt-2">
   <div class="card">
     <div class="card-body">
@@ -10,17 +9,18 @@
           </a>
         </div>
       </div>
-      <h4 class="card-title">Pengiriman - {{items.no_delivery}}</h4>
+      <h4 class="card-title">Pengiriman - <span id="deliveryNo"></span></h4>
 
-      <p>Customer: {{items.customer_name}}</p>
-      <p></p>
-      <p>Contact Person: {{items.cp}}</p>
-      <p></p>
-      <p>Phon: {{items.hp}}</p>
-      <p></p>
-      <p>Driver: {{items.driver_name}}</p>
-      <p></p>
-      <div id="map"class="leaflet-map" style="height: 500px"></div>
+      <p>Customer: <span id="customerName"></span></p>
+      <p>Contact Person: <span id="contactPerson"></span></p>
+      <p>Phone: <span id="phone"></span></p>
+      <p>Driver: <span id="driverName"></span></p>
+      <p>Address: <span id="address"></span></p>
+      <p>Date: <span id="deliveryDate"></span></p>
+      <p>Status: <span id="deliveryStatus"></span></p>
+      <img src="" alt="Delivery Photo" id="deliveryPhoto" style="max-width: 100%; height: auto; margin-top: 10px" />
+
+      <div id="map" class="leaflet-map" style="height: 500px"></div>
     </div>
   </div>
 </div>
@@ -32,59 +32,100 @@
 {% endblock addScript %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    var map = L.map("map");
+    // Fetch data from API
+    fetch("https://garudadriver.azurewebsites.net/api/delivery-by-id/DEL-824442")
+      .then((response) => response.json())
+      .then((data) => {
+        // Set data to HTML elements
+        document.getElementById("deliveryNo").innerText = data.no_delivery;
+        document.getElementById("customerName").innerText = data.customer_name;
+        document.getElementById("contactPerson").innerText = data.cp;
+        document.getElementById("phone").innerText = data.hp;
+        document.getElementById("driverName").innerText = data.driver_name;
+        document.getElementById("address").innerText = data.address;
+        document.getElementById("deliveryDate").innerText = data.date;
+        document.getElementById("deliveryStatus").innerText = data.status;
 
-    // Tambahkan peta Google Streets
-    var googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-    }).addTo(map);
+        // Set delivery photo
+        var deliveryPhoto = document.getElementById("deliveryPhoto");
+        deliveryPhoto.src = data.photo;
 
-    // Tambahkan peta OpenStreetMap sebagai lapisan cadangan
-    var osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap contributors",
-    });
+        // Set coordinates for the map
+        var deliveryLat = parseFloat(data.cust_lat);
+        var deliveryLon = parseFloat(data.cust_lon);
+        var username = data.driver_name;
+        console.log(username);
 
-    // Set tampilan peta
-    map.setView([{{items.driver_lat}}, {{items.driver_lon}}], 13);
+        //TODO KEMUDIAN HARUS PANGGIL API https://garudadriver.azurewebsites.net/api/driver-by-username/username
+        fetch(`https://garudadriver.azurewebsites.net/api/driver-by-username/${username}`)
+          .then((response) => response.json())
+          .then((driverData) => {
+            // Use the driverData to get more information about the driver
+            console.log(driverData);
+            var map = L.map("map");
 
-    // Icon untuk titik awal
-    var startIcon = L.icon({
-        iconUrl: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
-        iconSize: [60, 60],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32],
-    });
+            // Continue with the rest of your Leaflet code for the map
+            // ...
+            // Tambahkan peta Google Streets
+            var googleStreets = L.tileLayer("http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}", {
+              maxZoom: 20,
+              subdomains: ["mt0", "mt1", "mt2", "mt3"],
+            }).addTo(map);
 
-    // Waypoints
-    var waypoint1 = L.latLng({{items.driver_lat}}, {{items.driver_lon}});
-    var waypoint2 = L.latLng({{items.cust_lat}}, {{items.cust_lon}});
-
-    // Layer untuk marker waypoint
-    var waypointsLayer = L.layerGroup([L.marker(waypoint1, { icon: startIcon }), L.marker(waypoint2)]).addTo(map);
-
-    // Kontrol rute
-    L.Routing.control({
-        waypoints: [waypoint1, waypoint2],
-        routeWhileDragging: true,
-        show: true, // Sembunyikan petunjuk arah step-by-step
-        alternatives: true, // Tampilkan rute alternatif
-        createMarker: function (i, waypoint, n) {
-            return L.marker(waypoint.latLng, {
-                icon: i === 0 ? startIcon : new L.Icon.Default(),
+            // Tambahkan peta OpenStreetMap sebagai lapisan cadangan
+            var osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+              attribution: "© OpenStreetMap contributors",
             });
-        },
-    }).addTo(map);
 
-    // Kontrol lapisan
-    var baseLayers = {
-        "Google Streets": googleStreets,
-        "OpenStreetMap": osmLayer,
-    };
+            // Set tampilan peta
+            map.setView([driverData.lat, driverData.lon], 13);
 
-    L.control.layers(baseLayers).addTo(map);
-});
+            // Icon untuk titik awal
+            var startIcon = L.icon({
+              iconUrl: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
+              iconSize: [60, 60],
+              iconAnchor: [16, 32],
+              popupAnchor: [0, -32],
+            });
 
+            // Waypoints
+            var waypoint1 = L.latLng(driverData.lat, driverData.lon);
+            var waypoint2 = L.latLng(deliveryLat, deliveryLon);
+
+            // Layer untuk marker waypoint
+            var waypointsLayer = L.layerGroup([L.marker(waypoint1, { icon: startIcon }), L.marker(waypoint2)]).addTo(map);
+
+            // Kontrol rute
+            L.Routing.control({
+              waypoints: [waypoint1, waypoint2],
+              routeWhileDragging: true,
+              show: true, // Sembunyikan petunjuk arah step-by-step
+              alternatives: true, // Tampilkan rute alternatif
+              createMarker: function (i, waypoint, n) {
+                return L.marker(waypoint.latLng, {
+                  icon: i === 0 ? startIcon : new L.Icon.Default(),
+                });
+              },
+            }).addTo(map);
+
+            // Kontrol lapisan
+            var baseLayers = {
+              "Google Streets": googleStreets,
+              OpenStreetMap: osmLayer,
+            };
+
+            L.control.layers(baseLayers).addTo(map);
+
+            // Add a marker for the delivery location
+            L.marker([deliveryLat, deliveryLon]).addTo(map);
+
+            // Now you can use the additional driver information as needed
+            // For example, you can access driverData properties like driverData.propertyName
+          })
+          .catch((error) => console.error("Error fetching driver data:", error));
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  });
 </script>
 
 {% endblock pagecontent %}
