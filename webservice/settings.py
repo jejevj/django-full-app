@@ -28,10 +28,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'garudadriver.azurewebsites.net',
+    'https://garudadriver.azurewebsites.net',
+    'http://garudadriver.azurewebsites.net'
+    '*.azurewebsites.net',
     '*'
 ]
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1'
+    'https://garudadriver.azurewebsites.net',
+    'http://garudadriver.azurewebsites.net'
 ]
 CORS_ALLOW_ALL_ORIGINS =True
 

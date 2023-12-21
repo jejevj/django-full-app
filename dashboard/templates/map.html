@@ -32,8 +32,12 @@
 {% endblock addScript %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Fetch data from API
-    fetch("https://garudadriver.azurewebsites.net/api/delivery-by-id/DEL-824442")
+    // Fetch data from API // Extract delivery ID from the URL path
+    const pathSegments = window.location.pathname.split('/');
+    const deliveryId = pathSegments[pathSegments.length - 1];
+
+    // Fetch data from API based on dynamic delivery ID
+    fetch(`https://garudadriver.azurewebsites.net/api/delivery-by-id/${deliveryId}`)
       .then((response) => response.json())
       .then((data) => {
         // Set data to HTML elements
