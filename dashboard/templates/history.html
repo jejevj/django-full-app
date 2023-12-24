@@ -6,7 +6,7 @@
       <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
         <div class="card-header flex-column flex-md-row">
           <div class="head-label text-center">
-            <h5 class="card-title mb-0">Monitoring Delivery</h5>
+            <h5 class="card-title mb-0">History Delivery</h5>
           </div>
         </div>
         <table class="datatables-basic table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1163px">
@@ -27,7 +27,7 @@
             </tr>
           </thead>
           <tbody>{% for item in items %}
-            {% if item.status == "Pickup" %}
+            {% if item.status != "Pickup" %}
                 <tr>
                     <td>{{ item.no_delivery }}</td>
                     <td>{{ item.customer_name }}</td>

@@ -9,6 +9,7 @@ urlpatterns = [
     path('tambah_user/', user_register, name='user_register'),
     path('tambah_customer/', customer_add, name='customer_add'),
     path('tambah_delivery/', delivery_add, name='delivery_add'),
+    path('history/', history, name='history'),
     path('monitoring/<str:pk>', map, name='monitoring'),
     path('monitoring-list/', monitoring_list, name='monitoring1'),
     
@@ -24,6 +25,6 @@ urlpatterns = [
     path('api/customer/<int:pk>/', UserCustomerDetailView.as_view(), name='customer-detail'),
     
     
-    path('api/delivery/', DeliveryListCreateView.as_view(), name='delivery'),
+    path('api/delivery/', DeliveryListCreateView.as_view(), name='delivery-api'),
     path('api/delivery-by-id/<str:pk>', DeliveryDetailView.as_view(), name='delivery-detail'),
 ]

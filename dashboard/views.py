@@ -114,8 +114,15 @@ def delivery_list(request):
 
 @csrf_exempt
 def monitoring_list(request):
-    items = Delivery.objects.all()
+    items = Delivery.objects.filter(status="Pickup")
+
     return render(request, 'monitoring.html', {'items': items})
+
+
+@csrf_exempt
+def history(request):
+    items = Delivery.objects.all()
+    return render(request, 'history.html', {'items': items})
 
 
 @csrf_exempt
