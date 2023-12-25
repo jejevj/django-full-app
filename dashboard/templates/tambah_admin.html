@@ -1,0 +1,44 @@
+{% extends "layouts.html" %} {% load static %} {% block pagecontent %}
+<!-- djangotemplates/example/templates/base.html -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="col-xl">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{% if admin_id %}Edit{% else %}Tambah{% endif %} Admin</h5>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %} {% if admin_id %}
+          <input type="hidden" name="admin_id" value="{{ admin_id }}" />
+          {% endif %}
+          <div class="mb-3">
+            <label class="form-label" for="username">Username</label>
+            <div class="input-group input-group-merge">
+              <span class="input-group-text"><i class="ti ti-user"></i></span>
+              <input type="text" class="form-control" id="username" name="username" placeholder="JohnDoe" aria-label="JohnDoe" aria-describedby="basic-icon-default-fullname2" required value="{% if admin_id %}{{ admin.username }}{% endif %}" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="email">Email</label>
+            <div class="input-group input-group-merge">
+              <span class="input-group-text"><i class="ti ti-mail"></i></span>
+              <input type="email" class="form-control" id="email" name="email" placeholder="john.doe@example.com" aria-label="john.doe@example.com" aria-describedby="basic-icon-default-email2" required value="{% if admin_id %}{{ admin.email }}{% endif %}" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-group input-group-merge">
+              <span class="input-group-text"><i class="ti ti-lock"></i></span>
+              <input type="password" class="form-control" id="password" name="password" placeholder="********" aria-label="********" aria-describedby="basic-icon-default-password2" {% if not admin_id %}required{% endif %} />
+            </div>
+          </div>
+          <!-- ... Tambahkan elemen input untuk field-model lainnya sesuai kebutuhan ... -->
+          <button type="submit" class="btn btn-primary">{% if admin_id %}Simpan Perubahan{% else %}Tambah Admin{% endif %}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

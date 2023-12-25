@@ -1,0 +1,17 @@
+<!-- hapus_admin.html -->
+{% extends "layouts.html" %} {% load static %} {% block pagecontent %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title mb-4">Hapus Admin</h5>
+      <p>Apakah Anda yakin ingin menghapus admin "{{ admin.username }}"?</p>
+      <form method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="confirmation" value="ya" />
+        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+        <a href="{% url 'list_admin' %}" class="btn btn-secondary">Batal</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

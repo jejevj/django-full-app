@@ -1,175 +1,278 @@
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from dashboard.decorators import login_required
 from .models import UserDriver, UserCustomer, Delivery
+from django.contrib.auth.models import User
 
 from rest_framework import generics
 from .serializers import *
 from django.views.decorators.csrf import *
 
+
 @login_required
 @csrf_exempt
 def dashboard(request):
     # Logika tampilan dashboard
-    return render(request, 'dashboard.html')
+    return render(request, "dashboard.html")
+
+
+@csrf_exempt
+def list_admin(request):
+    admins = User.objects.all()
+    return render(request, "list_admin.html", {"admins": admins})
+
+
+@csrf_exempt
+def tambah_admin(request):
+    if request.method == "POST":
+        # Ambil data formulir dari request.POST
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+
+        # Periksa apakah username dan password tidak kosong
+        if username and password:
+            # Buat objek User dan simpan ke database
+            user = User.objects.create_user(
+                username=username, password=password, email=email
+            )
+            return redirect("list_admin")
+        else:
+            return HttpResponse("Username dan password tidak boleh kosong.")
+    else:
+        return render(request, "tambah_admin.html")
+
+
+@csrf_exempt
+def edit_admin(request, admin_id):
+    admin = get_object_or_404(User, pk=admin_id)
+
+    if request.method == "POST":
+        # Ambil data formulir dari request.POST
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+
+        # Periksa apakah username dan password tidak kosong
+        if username and password:
+            # Perbarui data admin dan simpan ke database
+            admin.username = username
+            admin.email = email
+            admin.set_password(password)
+            admin.save()
+
+            return redirect("list_admin")
+        else:
+            return HttpResponse("Username dan password tidak boleh kosong.")
+    else:
+        return render(request, "edit_admin.html", {"admin": admin})
+
+
+@csrf_exempt
+def hapus_admin(request, admin_id):
+    admin = get_object_or_404(User, pk=admin_id)
+
+    if request.method == "POST":
+        confirmation = request.POST.get("confirmation", "").lower()
+
+        if confirmation == "ya":
+            # Hapus data admin dari database
+            admin.delete()
+            return redirect("list_admin")
+        else:
+            return HttpResponse(
+                "Penghapusan admin dibatalkan."
+            )  # Berikan respon jika konfirmasi tidak sesuai
+    else:
+        return render(request, "hapus_admin.html", {"admin": admin})
+
 
 @csrf_exempt
 def user_register(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        hp = request.POST.get('hp')
-        photo = request.FILES.get('photo')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        hp = request.POST.get("hp")
+        photo = request.FILES.get("photo")
 
         # Validasi bahwa username belum digunakan
         if UserDriver.objects.filter(username=username).exists():
             error_message = "Username already exists."
         else:
             # Buat objek UserCustom dan simpan ke database
-            user = UserDriver(username=username, email=email, password=password, hp=hp, photo=photo)
+            user = UserDriver(
+                username=username, email=email, password=password, hp=hp, photo=photo
+            )
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            return redirect('driver')  # Ganti 'login' dengan nama URL halaman login
+            return redirect("driver")  # Ganti 'login' dengan nama URL halaman login
     else:
         error_message = None
 
-    return render(request, 'add_driver.html', {'error_message': error_message})
+    return render(request, "add_driver.html", {"error_message": error_message})
+
 
 @csrf_exempt
 def user_list(request):
     users = UserDriver.objects.all()
-    return render(request, 'driver.html', {'users': users})
+    return render(request, "driver.html", {"users": users})
+
 
 # views.py
 
 
 @csrf_exempt
 def customer_add(request):
-    if request.method == 'POST':
-        customer_name = request.POST.get('customer_name')
-        address = request.POST.get('address')
-        cp = request.POST.get('cp')
-        hp = request.POST.get('hp')
-        lat = request.POST.get('lat')
-        lon = request.POST.get('lon')
-        photo = request.FILES.get('photo')
+    if request.method == "POST":
+        customer_name = request.POST.get("customer_name")
+        address = request.POST.get("address")
+        cp = request.POST.get("cp")
+        hp = request.POST.get("hp")
+        lat = request.POST.get("lat")
+        lon = request.POST.get("lon")
+        photo = request.FILES.get("photo")
 
         # Validasi bahwa username belum digunakan
         if UserCustomer.objects.filter(customer_name=customer_name).exists():
             error_message = "Nama Customer Sudah Ada."
         else:
             # Buat objek UserCustom dan simpan ke database
-            user = UserCustomer(customer_name=customer_name, address=address, cp=cp, hp=hp, photo=photo,lat=lat,lon=lon)
+            user = UserCustomer(
+                customer_name=customer_name,
+                address=address,
+                cp=cp,
+                hp=hp,
+                photo=photo,
+                lat=lat,
+                lon=lon,
+            )
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            return redirect('customer')  # Ganti 'login' dengan nama URL halaman login
+            return redirect("customer")  # Ganti 'login' dengan nama URL halaman login
     else:
         error_message = None
 
-    return render(request, 'add_customer.html', {'error_message': error_message})
+    return render(request, "add_customer.html", {"error_message": error_message})
+
 
 @csrf_exempt
 def delivery_add(request):
-    if request.method == 'POST':
-        no_delivery = request.POST.get('no_delivery')
-        date = request.POST.get('date')
-        customer_name = request.POST.get('customer_name2')
-        address = request.POST.get('address')
-        cust_lat = request.POST.get('cust_lat')
-        cust_lon = request.POST.get('cust_lon')
-        cp = request.POST.get('cp')
-        hp = request.POST.get('hp')
-        driver_name = request.POST.get('driver_name2')
-        photo = request.FILES.get('photo')
+    if request.method == "POST":
+        no_delivery = request.POST.get("no_delivery")
+        date = request.POST.get("date")
+        customer_name = request.POST.get("customer_name2")
+        address = request.POST.get("address")
+        cust_lat = request.POST.get("cust_lat")
+        cust_lon = request.POST.get("cust_lon")
+        cp = request.POST.get("cp")
+        hp = request.POST.get("hp")
+        driver_name = request.POST.get("driver_name2")
+        photo = request.FILES.get("photo")
 
         # Validasi bahwa username belum digunakan
         if Delivery.objects.filter(no_delivery=no_delivery).exists():
             error_message = "Nomor Delivery Tidak Boleh Sama"
         else:
             # Buat objek UserCustom dan simpan ke database
-            user = Delivery(no_delivery=no_delivery,customer_name=customer_name,cust_lat=cust_lat,cust_lon=cust_lon, address=address, date=date, cp=cp, hp=hp,driver_name=driver_name, photo=photo)
+            user = Delivery(
+                no_delivery=no_delivery,
+                customer_name=customer_name,
+                cust_lat=cust_lat,
+                cust_lon=cust_lon,
+                address=address,
+                date=date,
+                cp=cp,
+                hp=hp,
+                driver_name=driver_name,
+                photo=photo,
+            )
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            return redirect('customer')  # Ganti 'login' dengan nama URL halaman login
+            return redirect("customer")  # Ganti 'login' dengan nama URL halaman login
     else:
         error_message = None
 
-    return render(request, 'add_delivery.html', {'error_message': error_message})
+    return render(request, "add_delivery.html", {"error_message": error_message})
 
 
 @csrf_exempt
 def customer_list(request):
     users = UserCustomer.objects.all()
-    return render(request, 'customer.html', {'users': users})
+    return render(request, "customer.html", {"users": users})
+
 
 @csrf_exempt
 def delivery_list(request):
     items = Delivery.objects.all()
-    return render(request, 'delivery.html', {'items': items})
+    return render(request, "delivery.html", {"items": items})
 
 
 @csrf_exempt
 def monitoring_list(request):
     items = Delivery.objects.filter(status="Pickup")
 
-    return render(request, 'monitoring.html', {'items': items})
+    return render(request, "monitoring.html", {"items": items})
 
 
 @csrf_exempt
 def history(request):
     items = Delivery.objects.all()
-    return render(request, 'history.html', {'items': items})
+    return render(request, "history.html", {"items": items})
 
 
 @csrf_exempt
-def map(request,pk):
+def map(request, pk):
     items = Delivery.objects.get(pk=pk)
-    return render(request, 'map.html',{'items':items})
-
-
-
+    return render(request, "map.html", {"items": items})
 
 
 # API
 
+
 class DriverListApiView(generics.ListAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = DriverSerializer
-    
-# DRIVER API 
+
+
+# DRIVER API
 class UserDriverListCreateView(generics.ListCreateAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = UserDriverSerializer
+
 
 class UserDriverDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserDriver.objects.all()
     serializer_class = UserDriverSerializer
 
+
 class UserDriverDetailView2(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserDriverSerializer
-    lookup_field = 'username'
+    lookup_field = "username"
 
     def get_queryset(self):
-        username = self.kwargs['username']
+        username = self.kwargs["username"]
         return UserDriver.objects.filter(username=username)
-    
+
+
 # CUSTOMER API
 class UserCustomerListCreateView(generics.ListCreateAPIView):
     queryset = UserCustomer.objects.all()
     serializer_class = UserCustomerSerializer
-    
+
+
 class UserCustomerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserCustomer.objects.all()
     serializer_class = UserCustomerSerializer
+
 
 # DELIVERY API
 class DeliveryListCreateView(generics.ListCreateAPIView):
     queryset = Delivery.objects.all()
     serializer_class = DeliveryCustomerSerializer
+
 
 class DeliveryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Delivery.objects.all()

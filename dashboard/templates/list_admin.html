@@ -1,0 +1,61 @@
+{% extends "layouts.html" %} {% load static %} {% block pagecontent %}
+<!-- djangotemplates/example/templates/base.html -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="card">
+    <div class="card-datatable table-responsive pt-0">
+      <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+        <div class="card-header flex-column flex-md-row">
+          <div class="head-label text-center">
+            <h5 class="card-title mb-0">Data Admin</h5>
+          </div>
+          <div class="dt-action-buttons text-end pt-3 pt-md-0">
+            <div class="dt-buttons btn-group flex-wrap">
+              <a class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" href="{% url 'tambah_admin' %}">
+                <span><i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Tambah Data</span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <table class="datatables-basic table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1163px">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Last Login</th>
+              <th>Aksi</th>
+              {% comment %}
+              <th class="dtr-hidden" style="display: none">Photo</th>
+              <th class="dtr-hidden" style="display: none">Actions</th>
+              {% endcomment %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in admins %}
+            <tr>
+              <td class="">{{ user.username }}</td>
+              <td class="">{{ user.email }}</td>
+              <td class="">{{ user.last_login }}</td>
+
+              <td class="dtr-hidden">
+                <div class="d-inline-block">
+                  <!-- Tombol untuk konfirmasi penghapusan -->
+                  <a href="{% url 'hapus_admin' user.id %}" class="btn btn-sm btn-icon item-delete">
+                    <i class="text-danger ti ti-trash"></i>
+                  </a>
+                  <!-- Add other actions as needed -->
+                </div>
+                <a href="{% url 'edit_admin' user.id %}" class="btn btn-sm btn-icon item-edit">
+                  <i class="text-primary ti ti-pencil"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
