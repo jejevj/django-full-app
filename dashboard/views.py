@@ -36,7 +36,7 @@ def tambah_admin(request):
             user = User.objects.create_user(
                 username=username, password=password, email=email
             )
-            redirect_url = '/popup/?message=Berhasil%menambahkan%20admin&status=success&redirect_url=list-admin'
+            redirect_url = '/popup/?message=Berhasil%20menambahkan%20admin&status=success&redirect_url=list-admin'
             return redirect(redirect_url)
         else:
             return HttpResponse("Username dan password tidak boleh kosong.")

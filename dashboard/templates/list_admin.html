@@ -43,11 +43,11 @@
                   <a href="{% url 'hapus_admin' user.id %}" class="btn btn-sm btn-icon item-delete">
                     <i class="text-danger ti ti-trash"></i>
                   </a>
-                  <!-- Add other actions as needed -->
-                </div>
                 <a href="{% url 'edit_admin' user.id %}" class="btn btn-sm btn-icon item-edit">
                   <i class="text-primary ti ti-pencil"></i>
                 </a>
+                <!-- Add other actions as needed -->
+              </div>
               </td>
             </tr>
             {% endfor %}
