@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from dashboard.decorators import login_required
 from .models import UserDriver, UserCustomer, Delivery
@@ -35,7 +36,8 @@ def tambah_admin(request):
             user = User.objects.create_user(
                 username=username, password=password, email=email
             )
-            return redirect("list_admin")
+            redirect_url = '/popup/?message=Berhasil%menambahkan%20admin&status=success&redirect_url=list-admin'
+            return redirect(redirect_url)
         else:
             return HttpResponse("Username dan password tidak boleh kosong.")
     else:
@@ -60,7 +62,8 @@ def edit_admin(request, admin_id):
             admin.set_password(password)
             admin.save()
 
-            return redirect("list_admin")
+            redirect_url = '/popup/?message=Berhasil%20mengubah%20admin&status=success&redirect_url=list-admin'
+            return redirect(redirect_url)
         else:
             return HttpResponse("Username dan password tidak boleh kosong.")
     else:
@@ -77,7 +80,8 @@ def hapus_admin(request, admin_id):
         if confirmation == "ya":
             # Hapus data admin dari database
             admin.delete()
-            return redirect("list_admin")
+            redirect_url = '/popup/?message=Berhasil%20menghapus%20admin&status=success&redirect_url=list-admin'
+            return redirect(redirect_url)
         else:
             return HttpResponse(
                 "Penghapusan admin dibatalkan."
@@ -106,11 +110,109 @@ def user_register(request):
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            return redirect("driver")  # Ganti 'login' dengan nama URL halaman login
+            redirect_url = '/popup/?message=Berhasil%20menambahkan%20data&status=success&redirect_url=driver'
+            return redirect(redirect_url)
     else:
         error_message = None
 
     return render(request, "add_driver.html", {"error_message": error_message})
+
+@csrf_exempt
+def edit_customer(request, customer_id):
+    customer = get_object_or_404(UserCustomer, pk=customer_id)
+
+    if request.method == "POST":
+        # Ambil data formulir dari request.POST
+        customer_name = request.POST.get("customer_name")
+        address = request.POST.get("address")
+        cp = request.POST.get("cp")
+        hp = request.POST.get("hp")
+
+        # Periksa apakah field utama tidak kosong
+        if customer_name and address and cp and hp:
+            # Perbarui data customer dan simpan ke database
+            customer.customer_name = customer_name
+            customer.address = address
+            customer.cp = cp
+            customer.hp = hp
+            customer.save()
+
+            # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
+            redirect_url = '/popup/?message=Edit%20berhasil%20&status=success&redirect_url=customer'
+            return redirect(redirect_url)
+        else:
+            return HttpResponse("Field utama tidak boleh kosong.")
+    else:
+        return render(request, "edit_customer.html", {"customer": customer})
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def hapus_customer(request, customer_id):
+    customer = get_object_or_404(UserCustomer, pk=customer_id)
+
+    if request.method == "POST":
+        confirmation = request.POST.get("confirmation", "").lower()
+
+        if confirmation == "ya":
+            # Hapus data customer dari database
+            customer.delete()
+ # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
+            redirect_url = '/popup/?message=Data%20berhasil%20dihapus&status=success&redirect_url=customer'
+            return redirect(redirect_url)
+        else:
+            return HttpResponse(
+                "Penghapusan customer dibatalkan."
+            )  # Berikan respon jika konfirmasi tidak sesuai
+    else:
+        return render(request, "hapus_customer.html", {"customer": customer})
+
+@csrf_exempt
+def hapus_driver(request, driver_id):
+    driver = get_object_or_404(UserDriver, pk=driver_id)
+
+    if request.method == "POST":
+        confirmation = request.POST.get("confirmation", "").lower()
+
+        if confirmation == "ya":
+            # Hapus data admin dari database
+            driver.delete()
+ # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
+            redirect_url = '/popup/?message=Data%20berhasil%20dihapus&status=success&redirect_url=driver'
+            return redirect(redirect_url)
+        else:
+            return HttpResponse(
+                "Penghapusan driver dibatalkan."
+            )  # Berikan respon jika konfirmasi tidak sesuai
+    else:
+        return render(request, "hapus_driver.html", {"driver": driver})
+
+
+@csrf_exempt
+def edit_driver(request, driver_id):
+    driver = get_object_or_404(UserDriver, pk=driver_id)
+
+    if request.method == "POST":
+        # Ambil data formulir dari request.POST
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+
+        # Periksa apakah username dan password tidak kosong
+        if username and password:
+            # Perbarui data pengemudi dan simpan ke database
+            driver.username = username
+            driver.email = email
+            driver.password = password  # Gunakan set_password untuk menyimpan kata sandi terenkripsi
+            driver.save()
+ # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
+            redirect_url = '/popup/?message=Edit%20berhasil%20&status=success&redirect_url=driver'
+            return redirect(redirect_url)
+        else:
+            return HttpResponse("Username dan password tidak boleh kosong.")
+    else:
+        return render(request, "edit_driver.html", {"driver": driver})
 
 
 @csrf_exempt
@@ -150,7 +252,8 @@ def customer_add(request):
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            return redirect("customer")  # Ganti 'login' dengan nama URL halaman login
+            redirect_url = '/popup/?message=Berhasil%20menambahkan%20customer&status=success&redirect_url=customer'
+            return redirect(redirect_url)
     else:
         error_message = None
 
@@ -189,15 +292,33 @@ def delivery_add(request):
                 photo=photo,
             )
             user.save()
-
             # Redirect ke halaman setelah pendaftaran berhasil
-            return redirect("customer")  # Ganti 'login' dengan nama URL halaman login
+            redirect_url = '/popup/?message=Berhasil%20menambahkan%20delivery&status=success&redirect_url=delivery'
+            return redirect(redirect_url)
     else:
         error_message = None
 
     return render(request, "add_delivery.html", {"error_message": error_message})
 
+@csrf_exempt
+def hapus_delivery(request, no_delivery):
+    delivery = get_object_or_404(Delivery, pk=no_delivery)
 
+    if request.method == "POST":
+        confirmation = request.POST.get("confirmation", "").lower()
+
+        if confirmation == "ya":
+            # Hapus data pengiriman dari database
+            delivery.delete() # Redirect ke halaman setelah pendaftaran berhasil
+            redirect_url = '/popup/?message=Berhasil%20menghapus%20delivery&status=success&redirect_url=delivery'
+            return redirect(redirect_url)
+        else:
+            return HttpResponse(
+                "Penghapusan pengiriman dibatalkan."
+            )  # Berikan respon jika konfirmasi tidak sesuai
+    else:
+        return render(request, "hapus_delivery.html", {"delivery": delivery})
+    
 @csrf_exempt
 def customer_list(request):
     users = UserCustomer.objects.all()
@@ -228,6 +349,17 @@ def map(request, pk):
     items = Delivery.objects.get(pk=pk)
     return render(request, "map.html", {"items": items})
 
+def popup(request):
+    message = request.GET.get('message', '')
+    status = request.GET.get('status', '')
+    redirect_url = request.GET.get('redirect_url', '')
+    context = {
+        'message': message,
+        'status': status,
+        'redirect_url': redirect_url,
+    }
+
+    return render(request, 'popup.html', context)
 
 # API
 

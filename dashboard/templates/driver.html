@@ -43,6 +43,7 @@
               <th>Email</th>
               <th>HP</th>
               <th>Created At</th>
+              <th>Driver</th>
               {% comment %} <th class="dtr-hidden" style="display: none">Photo</th>
               <th class="dtr-hidden" style="display: none">Actions</th> {% endcomment %}
             </tr>
@@ -110,6 +111,21 @@
                   {% comment %} href="{% url 'edit_user' user.id %}" {% endcomment %}
                   class="btn btn-sm btn-icon item-edit"
                 >
+                  <i class="text-primary ti ti-pencil"></i>
+                </a>
+              </td>
+
+              
+              <td class="dtr-hidden">
+                <div class="d-inline-block">
+                  <!-- Tombol untuk konfirmasi penghapusan -->
+                  <a href="{% url 'hapus_driver' user.id %}" class="btn btn-sm btn-icon item-delete">
+                    <i class="text-danger ti ti-trash"></i>
+                  </a>
+                  <!-- Add other actions as needed -->
+                </div>
+                {% comment %} <a href="{% url 'edit_admin' user.id %}" class="btn btn-sm btn-icon item-edit"> {% endcomment %}
+                <a href="{% url 'edit_driver' user.id %}" class="btn btn-sm btn-icon item-edit">
                   <i class="text-primary ti ti-pencil"></i>
                 </a>
               </td>

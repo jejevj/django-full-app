@@ -1,0 +1,26 @@
+<!-- edit_driver.html -->
+{% extends "layouts.html" %}
+{% load static %}
+{% block pagecontent %}
+{% endblock %}
+
+{% block addScript %}
+<!-- Tambahkan SweetAlert Library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- Tambahkan skrip JavaScript untuk menanggapi perubahan sukses -->
+<script>
+    var viewname = "{{redirect_url}}"
+      Swal.fire({
+        title: 'Sukses!',
+        text: "{{message}}",
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        // Jika tombol OK ditekan, arahkan ke halaman driver
+        if (result.isConfirmed) {
+            window.location.href = "/"+viewname;
+        }
+      });
+</script>
+{% endblock addScript %}
