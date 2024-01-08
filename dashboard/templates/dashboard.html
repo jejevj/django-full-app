@@ -1,4 +1,6 @@
-{% extends "layouts.html" %} {% load static %} {% block pagecontent %}
+{% extends "layouts.html" %}
+{% load static %}
+{% block pagecontent %}
 <!-- djangotemplates/example/templates/base.html -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -9,9 +11,9 @@
         <div class="d-flex align-items-end row">
           <div class="col-7">
             <div class="card-body text-nowrap">
-              <h5 class="card-title mb-0">Monitoring Driver 🎉</h5>
-              <p class="mb-2">Cek Pengiriman Disini</p>
-              <a href="{% url 'monitoring1' %}" class="btn btn-primary">Cek Pengiriman</a>
+              <h5 class="card-title mb-0">Driver Monitoring 🎉</h5>
+              <p class="mb-2">Check Deliveries Here</p>
+              <a href="{% url 'monitoring1' %}" class="btn btn-primary">Check Deliveries</a>
             </div>
           </div>
           <div class="col-5 text-center text-sm-left">
@@ -28,7 +30,7 @@
     </div>
     <!-- View Monitoring -->
 
-    {% if user.username != "manager"%}
+    {% if user.username != "manager" %}
     <!-- View Delivery -->
     <div class="col-lg-6 order-3 order-xl-0">
       <div class="card">
@@ -36,9 +38,9 @@
           <div class="col-7">
             <div class="card-body text-nowrap">
               <h5 class="card-title mb-0">Delivery</h5>
-              <p class="mb-2">Daftar Pengiriman Ada Disini</p>
+              <p class="mb-2">List of Deliveries Here</p>
               <a href="{% url 'delivery' %}"  class="btn btn-primary"
-                >Kelola Pengiriman</a
+                >Manage Deliveries</a
               >
             </div>
           </div>
@@ -63,9 +65,9 @@
           <div class="col-7">
             <div class="card-body text-nowrap">
               <h5 class="card-title mb-0">Customer</h5>
-              <p class="mb-2">Daftar Customer Ada Disini</p>
+              <p class="mb-2">List of Customers Here</p>
               <a href="{% url 'customer' %}"  class="btn btn-primary"
-                >Kelola Customer</a
+                >Manage Customers</a
               >
             </div>
           </div>
@@ -90,9 +92,9 @@
           <div class="col-7">
             <div class="card-body text-nowrap">
               <h5 class="card-title mb-0">Driver</h5>
-              <p class="mb-2">Daftar Driver Ada Disini</p>
+              <p class="mb-2">List of Drivers Here</p>
               <a href="{% url 'driver' %}" class="btn btn-primary"
-                >Kelola Driver</a
+                >Manage Drivers</a
               >
             </div>
           </div>
@@ -116,10 +118,10 @@
         <div class="d-flex align-items-end row">
           <div class="col-7">
             <div class="card-body text-nowrap">
-              <h5 class="card-title mb-0">History Driver</h5>
-              <p class="mb-2">Cek Riwayat Pengiriman</p>
+              <h5 class="card-title mb-0">Driver History</h5>
+              <p class="mb-2">Check Delivery History</p>
               <a href="{% url 'history' %}" class="btn btn-primary"
-                >Cek Riwayat</a
+                >Check History</a
               >
             </div>
           </div>
@@ -136,17 +138,17 @@
       </div>
     </div>
     <!-- View History Driver-->
-    {% else%}
+    {% else %}
      <!-- View History  Driver Manager -->
      <div class="col-lg-6 order-3 order-xl-0">
       <div class="card">
         <div class="d-flex align-items-end row">
           <div class="col-7">
             <div class="card-body text-nowrap">
-              <h5 class="card-title mb-0">History Driver</h5>
-              <p class="mb-2">Cek Riwayat Pengiriman</p>
+              <h5 class="card-title mb-0">Driver History</h5>
+              <p class="mb-2">Check Delivery History</p>
               <a href="{% url 'history' %}" class="btn btn-primary"
-                >Cek Riwayat</a
+                >Check History</a
               >
             </div>
           </div>
@@ -164,7 +166,7 @@
     </div>
     <!-- View History Driver Manager -->
     
-    {%endif%}
+    {% endif %}
   </div>
 </div>
 

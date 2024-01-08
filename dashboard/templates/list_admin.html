@@ -12,7 +12,7 @@
           <div class="dt-action-buttons text-end pt-3 pt-md-0">
             <div class="dt-buttons btn-group flex-wrap">
               <a class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" href="{% url 'tambah_admin' %}">
-                <span><i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Tambah Data</span></span>
+                <span><i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add Data</span></span>
               </a>
             </div>
           </div>
@@ -23,7 +23,7 @@
               <th>Username</th>
               <th>Email</th>
               <th>Last Login</th>
-              <th>Aksi</th>
+              <th>Action</th>
               {% comment %}
               <th class="dtr-hidden" style="display: none">Photo</th>
               <th class="dtr-hidden" style="display: none">Actions</th>
@@ -39,7 +39,7 @@
 
               <td class="dtr-hidden">
                 <div class="d-inline-block">
-                  <!-- Tombol untuk konfirmasi penghapusan -->
+                  <!-- Button for deletion confirmation -->
                   <a href="{% url 'hapus_admin' user.id %}" class="btn btn-sm btn-icon item-delete">
                     <i class="text-danger ti ti-trash"></i>
                   </a>

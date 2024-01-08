@@ -5,11 +5,11 @@
       <div class="dt-action-buttons text-end pt-3 pt-md-0">
         <div class="dt-buttons btn-group flex-wrap">
           <a class="btn btn-secondary create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" href="{% url 'monitoring1' %}">
-            <span><i class="ti ti-arrow-left me-sm-1"></i> <span class="d-none d-sm-inline-block">Kembali</span></span>
+            <span><i class="ti ti-arrow-left me-sm-1"></i> <span class="d-none d-sm-inline-block">Back</span></span>
           </a>
         </div>
       </div>
-      <h4 class="card-title">Pengiriman - <span id="deliveryNo"></span></h4>
+      <h4 class="card-title">Delivery - <span id="deliveryNo"></span></h4>
 
       <p>Customer: <span id="customerName"></span></p>
       <p>Contact Person: <span id="contactPerson"></span></p>
@@ -60,7 +60,7 @@
         var username = data.driver_name;
         console.log(username);
 
-        //TODO KEMUDIAN HARUS PANGGIL API https://garudadriver.azurewebsites.net/api/driver-by-username/username
+        //TODO THEN CALL API https://garudadriver.azurewebsites.net/api/driver-by-username/username
         fetch(`https://garudadriver.azurewebsites.net/api/driver-by-username/${username}`)
           .then((response) => response.json())
           .then((driverData) => {
@@ -70,21 +70,21 @@
 
             // Continue with the rest of your Leaflet code for the map
             // ...
-            // Tambahkan peta Google Streets
+            // Add Google Streets map
             var googleStreets = L.tileLayer("http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}", {
               maxZoom: 20,
               subdomains: ["mt0", "mt1", "mt2", "mt3"],
             }).addTo(map);
 
-            // Tambahkan peta OpenStreetMap sebagai lapisan cadangan
+            // Add OpenStreetMap as a fallback layer
             var osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
               attribution: "© OpenStreetMap contributors",
             });
 
-            // Set tampilan peta
+            // Set map view
             map.setView([driverData.lat, driverData.lon], 13);
 
-            // Icon untuk titik awal
+            // Icon for the starting point
             var startIcon = L.icon({
               iconUrl: "https://cdn-icons-png.flaticon.com/512/2554/2554978.png",
               iconSize: [60, 60],
@@ -96,15 +96,15 @@
             var waypoint1 = L.latLng(driverData.lat, driverData.lon);
             var waypoint2 = L.latLng(deliveryLat, deliveryLon);
 
-            // Layer untuk marker waypoint
+            // Layer for waypoint markers
             var waypointsLayer = L.layerGroup([L.marker(waypoint1, { icon: startIcon }), L.marker(waypoint2)]).addTo(map);
 
-            // Kontrol rute
+            // Route control
             L.Routing.control({
               waypoints: [waypoint1, waypoint2],
               routeWhileDragging: true,
-              show: true, // Sembunyikan petunjuk arah step-by-step
-              alternatives: true, // Tampilkan rute alternatif
+              show: true, // Hide step-by-step directions
+              alternatives: true, // Show alternative routes
               createMarker: function (i, waypoint, n) {
                 return L.marker(waypoint.latLng, {
                   icon: i === 0 ? startIcon : new L.Icon.Default(),
@@ -112,7 +112,7 @@
               },
             }).addTo(map);
 
-            // Kontrol lapisan
+            // Layer control
             var baseLayers = {
               "Google Streets": googleStreets,
               OpenStreetMap: osmLayer,

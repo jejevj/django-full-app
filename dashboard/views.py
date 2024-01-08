@@ -36,10 +36,10 @@ def tambah_admin(request):
             user = User.objects.create_user(
                 username=username, password=password, email=email
             )
-            redirect_url = '/popup/?message=Berhasil%20menambahkan%20admin&status=success&redirect_url=list-admin'
+            redirect_url = '/popup/?message=Successfully%20added%20admin&status=success&redirect_url=list-admin'
             return redirect(redirect_url)
         else:
-            return HttpResponse("Username dan password tidak boleh kosong.")
+            return HttpResponse("Username and password cannot be empty.")
     else:
         return render(request, "tambah_admin.html")
 
@@ -62,10 +62,10 @@ def edit_admin(request, admin_id):
             admin.set_password(password)
             admin.save()
 
-            redirect_url = '/popup/?message=Berhasil%20mengubah%20admin&status=success&redirect_url=list-admin'
+            redirect_url = '/popup/?message=Successfully%20edited%20admin&status=success&redirect_url=list-admin'
             return redirect(redirect_url)
         else:
-            return HttpResponse("Username dan password tidak boleh kosong.")
+            return HttpResponse("Username and password cannot be empty.")
     else:
         return render(request, "edit_admin.html", {"admin": admin})
 
@@ -80,11 +80,11 @@ def hapus_admin(request, admin_id):
         if confirmation == "ya":
             # Hapus data admin dari database
             admin.delete()
-            redirect_url = '/popup/?message=Berhasil%20menghapus%20admin&status=success&redirect_url=list-admin'
+            redirect_url = '/popup/?message=Successfully%20deleted%20admin&status=success&redirect_url=list-admin'
             return redirect(redirect_url)
         else:
             return HttpResponse(
-                "Penghapusan admin dibatalkan."
+                "Data Deletion Cancelled."
             )  # Berikan respon jika konfirmasi tidak sesuai
     else:
         return render(request, "hapus_admin.html", {"admin": admin})
@@ -110,7 +110,7 @@ def user_register(request):
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            redirect_url = '/popup/?message=Berhasil%20menambahkan%20data&status=success&redirect_url=driver'
+            redirect_url = '/popup/?message=Successfully%20added%20data&status=success&redirect_url=driver'
             return redirect(redirect_url)
     else:
         error_message = None
@@ -138,10 +138,10 @@ def edit_customer(request, customer_id):
             customer.save()
 
             # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
-            redirect_url = '/popup/?message=Edit%20berhasil%20&status=success&redirect_url=customer'
+            redirect_url = '/popup/?message=Successfully%20edited%20&status=success&redirect_url=customer'
             return redirect(redirect_url)
         else:
-            return HttpResponse("Field utama tidak boleh kosong.")
+            return HttpResponse("Main Field cannot be empty.")
     else:
         return render(request, "edit_customer.html", {"customer": customer})
 from django.shortcuts import render, get_object_or_404, redirect
@@ -159,11 +159,11 @@ def hapus_customer(request, customer_id):
             # Hapus data customer dari database
             customer.delete()
  # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
-            redirect_url = '/popup/?message=Data%20berhasil%20dihapus&status=success&redirect_url=customer'
+            redirect_url = '/popup/?message=Data%20successfully%20deleted&status=success&redirect_url=customer'
             return redirect(redirect_url)
         else:
             return HttpResponse(
-                "Penghapusan customer dibatalkan."
+                "Data Deletion Cancelled."
             )  # Berikan respon jika konfirmasi tidak sesuai
     else:
         return render(request, "hapus_customer.html", {"customer": customer})
@@ -179,11 +179,12 @@ def hapus_driver(request, driver_id):
             # Hapus data admin dari database
             driver.delete()
  # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
-            redirect_url = '/popup/?message=Data%20berhasil%20dihapus&status=success&redirect_url=driver'
+            redirect_url = '/popup/?message=Data%20successfully%20deleted&status=success&redirect_url=driver'
+
             return redirect(redirect_url)
         else:
             return HttpResponse(
-                "Penghapusan driver dibatalkan."
+                "Driver Deletion Cancelled."
             )  # Berikan respon jika konfirmasi tidak sesuai
     else:
         return render(request, "hapus_driver.html", {"driver": driver})
@@ -207,10 +208,10 @@ def edit_driver(request, driver_id):
             driver.password = password  # Gunakan set_password untuk menyimpan kata sandi terenkripsi
             driver.save()
  # Jika ingin melakukan pengalihan dengan membawa tiga variabel dalam query string
-            redirect_url = '/popup/?message=Edit%20berhasil%20&status=success&redirect_url=driver'
+            redirect_url = '/popup/?message=Successfully%20edited%20&status=success&redirect_url=driver'
             return redirect(redirect_url)
         else:
-            return HttpResponse("Username dan password tidak boleh kosong.")
+            return HttpResponse("Username and password cannot be empty.")
     else:
         return render(request, "edit_driver.html", {"driver": driver})
 
@@ -252,7 +253,7 @@ def customer_add(request):
             user.save()
 
             # Redirect ke halaman setelah pendaftaran berhasil
-            redirect_url = '/popup/?message=Berhasil%20menambahkan%20customer&status=success&redirect_url=customer'
+            redirect_url = '/popup/?message=Successfully%20added%20customer&status=success&redirect_url=customer'
             return redirect(redirect_url)
     else:
         error_message = None
@@ -276,7 +277,7 @@ def delivery_add(request):
 
         # Validasi bahwa username belum digunakan
         if Delivery.objects.filter(no_delivery=no_delivery).exists():
-            error_message = "Nomor Delivery Tidak Boleh Sama"
+            error_message = "Delivery Number Must Be Unique."
         else:
             # Buat objek UserCustom dan simpan ke database
             user = Delivery(
@@ -293,7 +294,7 @@ def delivery_add(request):
             )
             user.save()
             # Redirect ke halaman setelah pendaftaran berhasil
-            redirect_url = '/popup/?message=Berhasil%20menambahkan%20delivery&status=success&redirect_url=delivery'
+            redirect_url = '/popup/?message=Successfully%20added%20delivery&status=success&redirect_url=delivery'
             return redirect(redirect_url)
     else:
         error_message = None
@@ -310,11 +311,11 @@ def hapus_delivery(request, no_delivery):
         if confirmation == "ya":
             # Hapus data pengiriman dari database
             delivery.delete() # Redirect ke halaman setelah pendaftaran berhasil
-            redirect_url = '/popup/?message=Berhasil%20menghapus%20delivery&status=success&redirect_url=delivery'
+            redirect_url = '/popup/?message=Successfully%20deleted%20delivery&status=success&redirect_url=delivery'
             return redirect(redirect_url)
         else:
             return HttpResponse(
-                "Penghapusan pengiriman dibatalkan."
+                "Delivery Deletion Cancelled."
             )  # Berikan respon jika konfirmasi tidak sesuai
     else:
         return render(request, "hapus_delivery.html", {"delivery": delivery})

@@ -3,13 +3,13 @@
 <div class="container-xxl flex-grow-1 container-p-y">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title mb-4">Hapus Admin</h5>
-      <p>Apakah Anda yakin ingin menghapus admin "{{ admin.username }}"?</p>
+      <h5 class="card-title mb-4">Delete Admin</h5>
+      <p>Are you sure you want to delete admin "{{ admin.username }}"?</p>
       <form method="post" action="">
         {% csrf_token %}
         <input type="hidden" name="confirmation" value="ya" />
-        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
-        <a href="{% url 'list_admin' %}" class="btn btn-secondary">Batal</a>
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'list_admin' %}" class="btn btn-secondary">Cancel</a>
       </form>
     </div>
   </div>

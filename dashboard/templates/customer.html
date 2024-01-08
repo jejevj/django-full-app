@@ -10,7 +10,7 @@
       >
         <div class="card-header flex-column flex-md-row">
           <div class="head-label text-center">
-            <h5 class="card-title mb-0">Data Customer</h5>
+            <h5 class="card-title mb-0">Customer Data</h5>
           </div>
           <div class="dt-action-buttons text-end pt-3 pt-md-0">
             <div class="dt-buttons btn-group flex-wrap">
@@ -24,7 +24,7 @@
                 <span
                   ><i class="ti ti-plus me-sm-1"></i>
                   <span class="d-none d-sm-inline-block"
-                    >Tambah Data</span
+                    >Add Data</span
                   ></span
                 >
               </a>
@@ -39,14 +39,14 @@
         >
           <thead>
             <tr>
-              <th>Nama Customer</th>
-              <th>Alamat</th>
+              <th>Customer Name</th>
+              <th>Address</th>
               <th>Contact Person</th>
               <th>Phone</th>
               <th>Latitude</th>
               <th>Longitude</th>
               <th>Created At</th>
-              <th>Aksi</th>
+              <th>Action</th>
               {% comment %} <th class="dtr-hidden" style="display: none">Photo</th>
               <th class="dtr-hidden" style="display: none">Actions</th> {% endcomment %}
             </tr>
@@ -120,7 +120,7 @@
 
               <td class="dtr-hidden">
                 <div class="d-inline-block">
-                  <!-- Tombol untuk konfirmasi penghapusan -->
+                  <!-- Button for delete confirmation -->
                   <a href="{% url 'hapus_customer' user.id %}" class="btn btn-sm btn-icon item-delete">
                     <i class="text-danger ti ti-trash"></i>
                   </a>

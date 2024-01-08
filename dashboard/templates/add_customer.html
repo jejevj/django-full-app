@@ -5,7 +5,7 @@
   <div class="col-xl">
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Tambahkan Customer</h5>
+        <h5 class="mb-0">Add Customer</h5>
       </div>
       <div class="card-body">
         {% if  error_message != None%}
@@ -16,7 +16,7 @@
         <form method="post" enctype="multipart/form-data" id="cust" action="{% url 'customer_add' %}">
           {% csrf_token %}
           <div class="mb-3">
-            <label class="form-label" for="customer_name">Nama Customer</label>
+            <label class="form-label" for="customer_name">Customer Name</label>
             <div class="input-group input-group-merge">
               <span class="input-group-text"><i class="ti ti-user"></i></span>
               <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="JohnDoe" aria-label="JohnDoe" aria-describedby="basic-icon-default-fullname2" required />
@@ -27,7 +27,6 @@
             <div class="input-group input-group-merge">
               <span class="input-group-text"><i class="ti ti-location"></i></span>
               <textarea class="form-control" id="address" name="address" placeholder="Jl. ABC" aria-label="Jl. ABC" aria-describedby="basic-icon-default-fullname2" required></textarea>
-              {% comment %} <input type="text" class="form-control" id="address" name="address" placeholder="JohnDoe" aria-label="JohnDoe" aria-describedby="basic-icon-default-fullname2" required /> {% endcomment %}
             </div>
           </div>
 
@@ -39,10 +38,10 @@
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label" for="hp">HP</label>
+            <label class="form-label" for="hp">Phone</label>
             <div class="input-group input-group-merge">
               <span class="input-group-text"><i class="ti ti-phone"></i></span>
-              <input type="hp" class="form-control" id="hp" name="hp" placeholder="08xx" required />
+              <input type="text" class="form-control" id="hp" name="hp" placeholder="08xx" required />
             </div>
           </div>
           <div class="mb-3">
@@ -52,7 +51,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label" for="map">Pilih Lokasi pada Peta</label>
+            <label class="form-label" for="map">Select Location on Map</label>
             <div id="map" style="height: 300px"></div>
             <input type="hidden" id="lat" name="lat" />
             <input type="hidden" id="lon" name="lon" />
@@ -69,49 +68,49 @@
 {% block addScript %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // Inisialisasi peta
+    // Initialize the map
     var map = L.map('map').setView([-6.1661686, 106.8717686], 13);
 
-    // Set nilai default untuk lat dan lon
+    // Set default values for lat and lon
     document.getElementById('lat').value = -6.1661686.toFixed(6);
     document.getElementById('lon').value = 106.8717686.toFixed(6);
 
-    // Tambahkan peta Google Streets
+    // Add Google Streets map layer
     var googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
         maxZoom: 20,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(map);
 
-    // Tambahkan marker yang dapat dipindahkan
+    // Add draggable marker
     var marker = L.marker([-6.1661686, 106.8717686], { draggable: true }).addTo(map);
 
-    // Tangkap perubahan posisi marker
+    // Capture marker position changes
     marker.on('dragend', function (event) {
         var marker = event.target;
         var position = marker.getLatLng();
 
-        // Set nilai input lat dan lon
+        // Set input values for lat and lon
         document.getElementById('lat').value = position.lat.toFixed(6);
         document.getElementById('lon').value = position.lng.toFixed(6);
         console.log(position.lat);
         console.log(position.lng);
     });
 
-    // Tambahkan listener untuk formulir disubmit
+    // Add listener for form submission
     document.getElementById('cust').addEventListener('submit', function (event) {
-        // Update nilai default di model dengan nilai yang telah diubah oleh pengguna
+        // Update default values in the model with user-modified values
         document.getElementById('lat').value = document.getElementById('lat').value;
         document.getElementById('lon').value = document.getElementById('lon').value;
 
-        // Tambahkan logika validasi lainnya sebelum formulir disubmit
+        // Add other validation logic before form submission
 
-        // Contoh validasi sederhana
+        // Example of simple validation
         var lat = parseFloat(document.getElementById('lat').value);
         var lon = parseFloat(document.getElementById('lon').value);
 
         if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-            alert('Latitude dan longitude tidak valid.');
-            event.preventDefault(); // Mencegah formulir dikirim jika validasi gagal
+            alert('Invalid latitude and longitude.');
+            event.preventDefault(); // Prevent form submission if validation fails
         } else {
             console.log('Form submitted!');
         }

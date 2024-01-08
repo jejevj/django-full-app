@@ -1,4 +1,5 @@
-{% extends "layouts.html" %} {% block pagecontent %}
+{% extends "layouts.html" %}
+{% block pagecontent %}
 
 <div class="container my-2">
   <div class="card">
@@ -9,7 +10,7 @@
             <h5 class="card-title mb-0">History Delivery</h5>
           </div>
         </div>
-        <table class="datatables-basic table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 1163px">
+        <table class="datatables-basic table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%">
           <thead>
             <tr>
               <th>No Delivery</th>
@@ -18,39 +19,37 @@
               <th>Phone</th>
               <th>Maps</th>
               <th>Driver</th>
-              {% comment %}
-              <th>Status</th>
-              {% endcomment %} {% comment %}
-              <th class="dtr-hidden" style="display: none">Photo</th>
-              <th class="dtr-hidden" style="display: none">Actions</th>
-              {% endcomment %}
+              {# Uncomment the following line if 'status' field is present in your model #}
+              {# <th>Status</th> #}
             </tr>
           </thead>
-          <tbody>{% for item in items %}
-            {% if item.status != "Pickup" %}
+          <tbody>
+            {% for item in items %}
+              {% if item.status != "Pickup" %}
                 <tr>
-                    <td>{{ item.no_delivery }}</td>
-                    <td>{{ item.customer_name }}</td>
-                    <td class="">{{ item.cp }}</td>
-                    <td class="">{{ item.hp }}</td>
-                    <td class="">
-                        <a href="/monitoring/{{ item.no_delivery }}" class="btn btn-primary btn-sm">Buka Map</a>
-                    </td>
-                    <td class="">{{ item.driver_name }}</td>
-                    {# Uncomment the following line if 'status' field is present in your model #}
-                    {# <td>{{ item.status }}</td> #}
+                  <td>{{ item.no_delivery }}</td>
+                  <td>{{ item.customer_name }}</td>
+                  <td>{{ item.cp }}</td>
+                  <td>{{ item.hp }}</td>
+                  <td>
+                    <a href="/monitoring/{{ item.no_delivery }}" class="btn btn-primary btn-sm" target="_blank">Buka Map</a>
+                  </td>
+                  <td>{{ item.driver_name }}</td>
+                  {# Uncomment the following line if 'status' field is present in your model #}
+                  {# <td>{{ item.status }}</td> #}
                 </tr>
-            {% endif %}
-        {% endfor %}
-        
+              {% endif %}
+            {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-{% block addScript %}
 
+{% block addScript %}
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-{% endblock addScript %} {% endblock pagecontent %}
+{% endblock addScript %}
+
+{% endblock pagecontent %}
