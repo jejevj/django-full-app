@@ -114,7 +114,7 @@ data-template="front-pages">
         {% endif %}
 
           <h3 class="mb-1">Welcome to Garuda Monitoring! 👋</h3>
-          <p class="mb-4">Please sign-in to your account</p>
+          <p class="mb-4">Please login to your account</p>
 
           <form  class="mb-3" method='post' action="{% url 'oks' %}">
             {% csrf_token %}
@@ -143,7 +143,7 @@ data-template="front-pages">
                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary d-grid w-100 mt-3">Sign in</button>
+            <button type="submit" class="btn btn-primary d-grid w-100 mt-3">Login</button>
           </form>
 
           </div>
