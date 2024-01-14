@@ -9,7 +9,7 @@ from .serializers import *
 from django.views.decorators.csrf import *
 
 
-@login_required
+#@login_required
 #@csrf_exempt
 def dashboard(request):
     # Logika tampilan dashboard
