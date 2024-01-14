@@ -9,20 +9,20 @@ from .serializers import *
 from django.views.decorators.csrf import *
 
 
-#@login_required
-#@csrf_exempt
+@login_required
+@csrf_exempt
 def dashboard(request):
     # Logika tampilan dashboard
     return render(request, "dashboard.html")
 
 
-#@csrf_exempt
+@csrf_exempt
 def list_admin(request):
     admins = User.objects.all()
     return render(request, "list_admin.html", {"admins": admins})
 
 
-#@csrf_exempt
+@csrf_exempt
 def tambah_admin(request):
     if request.method == "POST":
         # Ambil data formulir dari request.POST
@@ -44,7 +44,7 @@ def tambah_admin(request):
         return render(request, "tambah_admin.html")
 
 
-#@csrf_exempt
+@csrf_exempt
 def edit_admin(request, admin_id):
     admin = get_object_or_404(User, pk=admin_id)
 
@@ -70,7 +70,7 @@ def edit_admin(request, admin_id):
         return render(request, "edit_admin.html", {"admin": admin})
 
 
-#@csrf_exempt
+@csrf_exempt
 def hapus_admin(request, admin_id):
     admin = get_object_or_404(User, pk=admin_id)
 
@@ -90,7 +90,7 @@ def hapus_admin(request, admin_id):
         return render(request, "hapus_admin.html", {"admin": admin})
 
 
-#@csrf_exempt
+@csrf_exempt
 def user_register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -117,7 +117,7 @@ def user_register(request):
 
     return render(request, "add_driver.html", {"error_message": error_message})
 
-#@csrf_exempt
+@csrf_exempt
 def edit_customer(request, customer_id):
     customer = get_object_or_404(UserCustomer, pk=customer_id)
 
@@ -148,7 +148,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-#@csrf_exempt
+@csrf_exempt
 def hapus_customer(request, customer_id):
     customer = get_object_or_404(UserCustomer, pk=customer_id)
 
@@ -168,7 +168,7 @@ def hapus_customer(request, customer_id):
     else:
         return render(request, "hapus_customer.html", {"customer": customer})
 
-#@csrf_exempt
+@csrf_exempt
 def hapus_driver(request, driver_id):
     driver = get_object_or_404(UserDriver, pk=driver_id)
 
@@ -190,7 +190,7 @@ def hapus_driver(request, driver_id):
         return render(request, "hapus_driver.html", {"driver": driver})
 
 
-#@csrf_exempt
+@csrf_exempt
 def edit_driver(request, driver_id):
     driver = get_object_or_404(UserDriver, pk=driver_id)
 
@@ -216,7 +216,7 @@ def edit_driver(request, driver_id):
         return render(request, "edit_driver.html", {"driver": driver})
 
 
-#@csrf_exempt
+@csrf_exempt
 def user_list(request):
     users = UserDriver.objects.all()
     return render(request, "driver.html", {"users": users})
@@ -225,7 +225,7 @@ def user_list(request):
 # views.py
 
 
-#@csrf_exempt
+@csrf_exempt
 def customer_add(request):
     if request.method == "POST":
         customer_name = request.POST.get("customer_name")
@@ -261,7 +261,7 @@ def customer_add(request):
     return render(request, "add_customer.html", {"error_message": error_message})
 
 
-#@csrf_exempt
+@csrf_exempt
 def delivery_add(request):
     if request.method == "POST":
         no_delivery = request.POST.get("no_delivery")
@@ -301,7 +301,7 @@ def delivery_add(request):
 
     return render(request, "add_delivery.html", {"error_message": error_message})
 
-#@csrf_exempt
+@csrf_exempt
 def hapus_delivery(request, no_delivery):
     delivery = get_object_or_404(Delivery, pk=no_delivery)
 
@@ -320,32 +320,32 @@ def hapus_delivery(request, no_delivery):
     else:
         return render(request, "hapus_delivery.html", {"delivery": delivery})
     
-#@csrf_exempt
+@csrf_exempt
 def customer_list(request):
     users = UserCustomer.objects.all()
     return render(request, "customer.html", {"users": users})
 
 
-#@csrf_exempt
+@csrf_exempt
 def delivery_list(request):
     items = Delivery.objects.all()
     return render(request, "delivery.html", {"items": items})
 
 
-#@csrf_exempt
+@csrf_exempt
 def monitoring_list(request):
     items = Delivery.objects.filter(status="Pickup")
 
     return render(request, "monitoring.html", {"items": items})
 
 
-#@csrf_exempt
+@csrf_exempt
 def history(request):
     items = Delivery.objects.all()
     return render(request, "history.html", {"items": items})
 
 
-#@csrf_exempt
+@csrf_exempt
 def map(request, pk):
     items = Delivery.objects.get(pk=pk)
     return render(request, "map.html", {"items": items})
